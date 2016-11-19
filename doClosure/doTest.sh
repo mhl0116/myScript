@@ -1,1 +1,0 @@
-python doClosure_mZ.py --min 0.007 --max 0.00875 --inpath "/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_2015MC/HZZ4L_Mass/makeSlimTree/DY_2015MC_kalman_v4/" --filename "DYJetsToLL_M-50_kalman_v4_m2e.root" --plotpath "/home/mhl/public_html/2016/20161020_mass/fitmassZ/" --outtxtName "sigma_m2e.txt" --fs "2e"
