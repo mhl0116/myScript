@@ -253,4 +253,21 @@ cp paraConfigurations_2D.py paraConfigurations.py
 #python makePlot_2D.py -t "H15_genPt_recopT_4mu"
 #python makePlot_2D.py -t "H15_recoPt_refitpT_4mu"
 
-python makePlot_2D.py -t "H15_GENZ_mass_0_1"
+#python makePlot_2D.py -t "H15_GENZ_mass_0_1"
+
+
+#python makePlot_2D.py -t "DY_2015_relpTErr_eta_e"
+#python makePlot_2D.py -t "DY_2015_relpTErr_pT_eta_0_0p8_e"
+#python makePlot_2D.py -t "DY_2015_pTErr_pT_eta_0_0p8_e"
+#python makePlot_2D.py -t "DY_2015_relpTErr_pT_eta_0_0p8_pT_0_50_e"
+#python makePlot_2D.py -t "DY_2015_relpTErr_pT_eta_0_0p8_pT_50_100_e"
+
+
+#python makePlot_2D.py -t "DY_2015_relpTErr_pT_eta_0p8_1p44_e"
+#python makePlot_2D.py -t "DY_2015_relpTErr_pT_eta_1p57_2p5_e"
+python makePlot_2D.py -t "DY_2015_relpTErr_pT_eta_1_1p44_e"
+#python makePlot_2D.py -t "DY_2015_pTErr_phi_eta_0_0p8_e"
+#python makePlot_2D.py -t "DY_2015_pTErr_sqrtpT_eta_0_0p8_e"
+#python makePlot_2D.py -t "DY_2015_sqrtpTErr_pT_eta_0_0p8_e"
+#python makePlot_2D.py -t "DY_2015_pTErrOverSqrtPt_pT_eta_0_0p8_e"
+#python makePlot_2D.py -t "DY_2015_relPtErr2_paraPt_eta_0_0p8_e"

@@ -76,6 +76,11 @@ cp paraConfigurations_DY_DY.py paraConfigurations.py
 #python makePlot_1D.py -t "DY15_MC_GENZM_recoZcut_70_110"
 #python makePlot_1D.py -t "DY15_MC_GENZM_recoZcut_60_120"
 
+#python makePlot_1D.py -t "DY_2015_pTErr_eta_0_0p8_e"
+#python makePlot_1D.py -t "DY_2015_relpTErr_eta_0_0p8_e"
+python makePlot_1D.py -t "DY_2015_eta_eta_1p57_2p5_diffrelPtErr_e"
+
+
 cp paraConfigurations_H.py paraConfigurations.py
 #python makePlot_1D.py -t "H15_MC_mass4lErr_2e2mu"
 #python makePlot_1D.py -t "H15_MC_mass4lErr_4mu"
@@ -124,6 +129,6 @@ cp paraConfigurations_H.py paraConfigurations.py
 #python makePlot_1D.py -t "H_GENmz1_13tev_2015_2016_2mu2e"
 
 #python makePlot_1D.py -t "H_GENmz1_8tev_13tev_2015_2e2mu_useGENZ_mass"
-python makePlot_1D.py -t "H_GENmz1_8tev_13tev_2015_2mu2e_useGENZ_mass"
-python makePlot_1D.py -t "H_GENmz1_8tev_13tev_2015_4e_useGENZ_mass"
-python makePlot_1D.py -t "H_GENmz1_8tev_13tev_2015_4mu_useGENZ_mass"
+#python makePlot_1D.py -t "H_GENmz1_8tev_13tev_2015_2mu2e_useGENZ_mass"
+#python makePlot_1D.py -t "H_GENmz1_8tev_13tev_2015_4e_useGENZ_mass"
+#python makePlot_1D.py -t "H_GENmz1_8tev_13tev_2015_4mu_useGENZ_mass"

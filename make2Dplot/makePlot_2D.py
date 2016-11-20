@@ -134,3 +134,11 @@ c1.SetGrid()
 c1.SaveAs(savePath+saveName+'.png')
 c1.SaveAs(savePath+saveName+'.pdf')
 
+with open(savePath + saveName + ".txt", "w") as myfile:
+   myfile.write('rootPath: ' + rootPath1 + '\n')
+   myfile.write('rootfile: ' + rootfile1 + '\n')
+   for i in range(len(vars1_x)):
+       myfile.write('var_x: ' + vars1_x[i] + '\n')
+       myfile.write('var_y: ' + vars1_y[i] + '\n')
+       myfile.write('cut: ' + cuts1[i] + '\n')
+myfile.close()

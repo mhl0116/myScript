@@ -129,6 +129,7 @@ pad1.SetBottomMargin(0)
 pad1.SetGridx()
 pad1.Draw()
 pad1.cd()
+#pad1.SetLogy()
 
 dummy = TH1D("dummy","dummy",1,binInfo[1],binInfo[2])
 dummy.SetMinimum(0)
@@ -210,4 +211,19 @@ ratio.GetXaxis().SetLabelSize(25)
 
 c1.SaveAs(savePath+saveName+'.png')
 c1.SaveAs(savePath+saveName+'.pdf')
+
+with open(savePath + saveName + ".txt", "w") as myfile:
+   myfile.write('rootPath1: ' + rootPath1 + '\n')
+   myfile.write('rootfile1: ' + rootfile1 + '\n')
+   for i in range(len(vars1)):
+       myfile.write('var1: ' + vars1[i] + '\n')
+       myfile.write('cut1: ' + cuts1[i] + '\n\n')
+
+   myfile.write('rootPath2: ' + rootPath2 + '\n')
+   myfile.write('rootfile2: ' + rootfile2 + '\n')
+   for i in range(len(vars2)):
+       myfile.write('var2: ' + vars2[i] + '\n')
+       myfile.write('cut2: ' + cuts2[i] + '\n\n')
+   
+myfile.close()
 
