@@ -79,7 +79,7 @@ w.factory('Gaussian::gauss(x[' + str(xmin) + ',' + str(xmax) + '],meanGauss[0,-1
 w.factory('BreitWigner::bw(x[' + str(xmin) + ',' + str(xmax) + '],meanBW[91.2, 90, 92],sigmaBW[2.5,2,3])')
 #w.factory('BreitWigner::bw(x[' + str(xmin) + ',' + str(xmax) + '],meanBW[91.2],sigmaBW[2.406])')
 w.factory('DoubleCB::doubleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
-                              meanDCB[125,124,126], sigmaDCB[0,3], \
+                              meanDCB[125,124,126], sigmaDCB[1.75,0,10], \
                               alphaDCB[1,0,5], nDCB[1,0,20], alpha2[1,0,5], n2[1,0,20])')
 w.factory('CBShape::singleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
                             meanCB[0,-1.5,1.5], sigmaCB[0.1,0,10], alphaCB[1,0,50], nCB[1,0,50])')
@@ -95,25 +95,41 @@ HIST2.Scale(1/HIST2.Integral()*HIST1.Integral())
 dataHist1 = RooDataHist('dataHist1', 'dataHist1', RooArgList(w.var('x')), HIST1, 1)
 dataHist2 = RooDataHist('dataHist2', 'dataHist2', RooArgList(w.var('x')), HIST2, 1)
 
+meanReco = ''
+meanRefit = ''
+sigmaReco = ''
+sigmaRefit = ''
+
 if doFit:
+
+   w.var('sigmaDCB').setRange(1.5,2.15)
 
    pdf = w.pdf(pdfName)
    fFit = pdf.fitTo(dataHist1)
 
+   meanReco += str('{:.2f}'.format(round(w.var('meanDCB').getVal(),2))) + ' #pm ' + str(round(w.var('meanDCB').getError(),2))
+   sigmaReco += str('{:.2f}'.format(round(w.var('sigmaDCB').getVal(),2))) + ' #pm ' + str(round(w.var('sigmaDCB').getError(),2))
+
    xframe = w.var('x').frame(RooFit.Title(xTitle))
 
-   dataHist1.plotOn(xframe, RooFit.MarkerStyle(1), RooFit.MarkerColor(1))
-   pdf.plotOn(xframe, RooFit.LineColor(1), RooFit.LineWidth(2) )
+   dataHist1.plotOn(xframe, RooFit.MarkerStyle(20), RooFit.MarkerColor(1), RooFit.MarkerSize(0.8))
+   pdf.plotOn(xframe, RooFit.LineColor(1), RooFit.LineWidth(2), )
    if pdfName == 'model':
       pdf.plotOn(xframe, RooFit.LineColor(1), RooFit.LineWidth(2), RooFit.Components("bkg"), RooFit.LineStyle(kDashed))
-   pdf.paramOn(xframe, RooFit.Layout(0.15, 0.42, 0.7), RooFit.Format("NE", RooFit.FixedPrecision(4)))
+#   pdf.paramOn(xframe, RooFit.Layout(0.15, 0.42, 0.7), RooFit.Format("NE", RooFit.FixedPrecision(4)))
+
+   w.var('sigmaDCB').setRange(1.5,1.79)
 
    fFit = pdf.fitTo(dataHist2)
-   dataHist2.plotOn(xframe, RooFit.MarkerStyle(1), RooFit.MarkerColor(2))
+
+   meanRefit += str('{:.2f}'.format(round(w.var('meanDCB').getVal(),2))) + ' #pm ' + str(round(w.var('meanDCB').getError(),2))
+   sigmaRefit += str('{:.2f}'.format(round(w.var('sigmaDCB').getVal(),2))) + ' #pm ' + str(round(w.var('sigmaDCB').getError(),2))
+
+   dataHist2.plotOn(xframe, RooFit.MarkerStyle(20), RooFit.MarkerColor(2), RooFit.MarkerSize(0.8))
    pdf.plotOn(xframe, RooFit.LineColor(2), RooFit.LineWidth(2) )
    if pdfName == 'model':
       pdf.plotOn(xframe, RooFit.LineColor(2), RooFit.LineWidth(2), RooFit.Components("bkg"), RooFit.LineStyle(kDashed))
-   pdf.paramOn(xframe, RooFit.Layout(0.65, 0.92, 0.7), RooFit.Format("NE", RooFit.FixedPrecision(4)))
+#   pdf.paramOn(xframe, RooFit.Layout(0.65, 0.92, 0.7), RooFit.Format("NE", RooFit.FixedPrecision(4)))
 
    yMax_doFit = max(HIST1.GetMaximum()*1.5,HIST2.GetMaximum()*1.5)
    
@@ -123,12 +139,12 @@ HIST1.Scale(1/HIST1.Integral())
 HIST2.Scale(1/HIST2.Integral())
 
 c1 = TCanvas("c1", "c1", 800, 800)
-c1.SetLogy()
-pad1 = TPad("pad1", "pad1", 0, 0.3, 1, 1.0)
-pad1.SetBottomMargin(0)
-pad1.SetGridx()
-pad1.Draw()
-pad1.cd()
+#c1.SetLogy()
+#pad1 = TPad("pad1", "pad1", 0, 0.3, 1, 1.0)
+#pad1.SetBottomMargin(0)
+#pad1.SetGridx()
+#pad1.Draw()
+#pad1.cd()
 #pad1.SetLogy()
 
 dummy = TH1D("dummy","dummy",1,binInfo[1],binInfo[2])
@@ -146,7 +162,7 @@ dummy.SetLineWidth(0)
 dummy.SetMarkerSize(0)
 dummy.GetYaxis().SetTitle(yTitle)
 dummy.GetYaxis().SetTitleOffset(1.3)
-#dummy.GetXaxis().SetTitle(xTitle)
+dummy.GetXaxis().SetTitle(xTitle)
 dummy.Draw()
 
 if not doFit:
@@ -160,7 +176,7 @@ HIST2.SetLineColor(2)
 HIST1.SetLineWidth(1)
 HIST2.SetLineWidth(1)
 
-legend = TLegend(0.15,0.75,0.42,0.9)
+legend = TLegend(0.15,0.55,0.42,0.7)
 legend.AddEntry(HIST1, legend1, 'l')
 legend.AddEntry(HIST2, legend2, 'l')
 legend.SetTextSize(0.03)
@@ -174,10 +190,16 @@ latex.SetNDC()
 latex.SetTextSize(0.45*c1.GetTopMargin())
 latex.SetTextFont(42)
 latex.SetTextAlign(11)
+
+latex.SetTextColor(1)
+latex.DrawLatex(0.15, 0.85, 'mean_{DCB} = ' + meanReco + ', sigma_{DCB} = ' + sigmaReco + ' (Reco)')
+latex.SetTextColor(2)
+latex.DrawLatex(0.15, 0.78, 'mean_{DCB} = ' + meanRefit + ', sigma_{DCB} = ' + sigmaRefit + ' (Refit)')
+
 latex.DrawLatex(0.45, 0.85, latexNote1)
 if len(latexNote2) > 0:
    latex.DrawLatex(0.45, 0.75, latexNote2)
-
+'''
 c1.cd()
 pad2 = TPad("pad2", "pad2", 0, 0.05, 1, 0.3)
 pad2.SetTopMargin(0)
@@ -207,8 +229,7 @@ ratio.GetXaxis().SetTitleFont(43)
 ratio.GetXaxis().SetTitleOffset(4.)
 ratio.GetXaxis().SetLabelFont(43)
 ratio.GetXaxis().SetLabelSize(25)
-
-
+'''
 c1.SaveAs(savePath+saveName+'.png')
 c1.SaveAs(savePath+saveName+'.pdf')
 

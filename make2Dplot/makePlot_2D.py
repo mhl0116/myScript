@@ -77,14 +77,15 @@ HIST1.Scale(1/HIST1.Integral())
 #HIST2.Scale(1/HIST2.Integral())
 
 c1 = TCanvas("c1", "c1", 800, 800)
-if 'doLogZ' in paraConfig:
-  if doLogZ:
-   c1.SetLogz()
+#if 'doLogZ' in paraConfig:
+#  if doLogZ:
+#   c1.SetLogz()
 c1.SetGrid()
 c1.SetTopMargin(0.1)
 c1.SetLeftMargin(0.15)
 c1.SetRightMargin(0.15)
 dummy = TH2D("dummy","dummy",1, binInfo_x[1], binInfo_x[2], 1, binInfo_y[1], binInfo_y[2])
+HIST1.SetMinimum(0)
 dummy.SetMinimum(0)
 #yMax1 = HIST1.GetMaximum()*1.5
 #yMax2 = HIST2.GetMaximum()*1.5

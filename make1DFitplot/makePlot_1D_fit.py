@@ -79,41 +79,57 @@ w = RooWorkspace('w')
 xmin = binInfo[1]
 xmax = binInfo[2]
 
-w.factory('Gaussian::gauss(x[' + str(xmin) + ',' + str(xmax) + '],meanGauss[90, 40, 120],sigmaGauss[10, 0, 100])')
+w.factory('Gaussian::gauss(x[' + str(xmin) + ',' + str(xmax) + '],meanGauss1[90, 40, 120],sigmaGauss1[10, 0, 100])')
 #w.factory('Gaussian::gauss(x[' + str(xmin) + ',' + str(xmax) + '],meanGauss[7.22605e+01],sigmaGauss[1.08673e+01])')
 
 w.factory('BreitWigner::bw(x[' + str(xmin) + ',' + str(xmax) + '],meanBW[91.2, 80, 100],sigmaBW[2.5,0,10])')
-#w.factory('BreitWigner::bw(x[' + str(xmin) + ',' + str(xmax) + '],meanBW[91.18],sigmaBW[2.49])')
+#w.factory('BreitWigner::bw(x[' + str(xmin) + ',' + str(xmax) + '],meanBW[91.19],sigmaBW[2.44])')
 
 w.factory('DoubleCB::doubleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
-                              meanDCB[0,-1,1], sigmaDCB[1, 0,10], \
-                              alphaDCB[1,0,5], nDCB[5,0,50], alpha2[1,0,5], n2[5,0,50])')
+                              meanDCB[125,120,130], sigmaDCB[1,0,10],  \
+                              alphaDCB[1,0,10], nDCB[1,0,10], alpha2[1,0,10], n2[1,0,50])')
+
+#4e refit
+#                              meanDCB[124.65], sigmaDCB[1.782], \
+#                              alphaDCB[0.9876], nDCB[4.394], alpha2[2.022], n2[3.256])')
+#4e reco
+#                              meanDCB[124.73], sigmaDCB[2.02], \
+#                              alphaDCB[0.95], nDCB[4.23], alpha2[2.189], n2[3.04])')
+
+
+#                              alphaDCB[1,0,10], nDCB[1,0,10], alpha2[1,0,10], n2[1,0,50])')
+#                              alphaDCB[1.237], nDCB[2.482], alpha2[2.363], n2[1.873])')
+
+#w.factory('DoubleCB::doubleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
+#                              meanDCB[0,-1,1], sigmaDCB[0.1, 0, 5], \
+#                              alphaDCB[1,0,10], nDCB[1,0,10], alpha2[1,0,10], n2[1,0,50])')
+
+
 w.factory('CBShape::singleCB(x, \
-#                            meanCB[85,80,95], sigmaCB[5,0,10], alphaCB[1,0,10], nCB[1,0,50])')
-#                            meanCB[9.10005e+01], sigmaCB[8.77700e-01], alphaCB[4.56794e-01], nCB[3.82520e+00])')
-#                            meanCB[90.95,85,95], sigmaCB[1.154,0,10], alphaCB[1.187,0,10], nCB[5.911,0,50])')
+                             meanCB[0,-1,1], sigmaCB[1,0,10], alphaCB[1,0,10], nCB[1,0,50])')
+#                             meanCB[85,80,95], sigmaCB[5,0,10], alphaCB[1,0,10], nCB[1,0,50])')
 
 w.factory('Polynomial::poly3(x,{a0[1,-100,100],a1[10,-100,100],a2[-100,-1000,1000],a3[-10, -10000,10000]})')
-w.factory("Exponential::bkg(x, tau[0.1,-1,1])")
+w.factory("Exponential::bkg(x, tau[-0.3,-1,1])")
 w.factory('Bernstein::bernstein(x, {b0[1,-100,100], b1[10,-100,100], b2[10,-100,100], b3[100,-1000,1000]})')
 
-w.var('x').setBins(1000, 'fft')
+#w.var('x').setBins(1000, 'fft')
 w.factory('FCONV::BWxCB(x,bw,singleCB)')
 w.factory('FCONV::BWxDCB(x,bw,doubleCB)')
-w.factory('SUM:BWplusPOLY3(f1[0,1]*bw, poly3)')
-w.factory('SUM:model(fsig[0.8,0.5,1]*BWxCB, bkg)')
+#w.factory('SUM:BWplusPOLY3(f1[0,1]*bw, poly3)')
+w.factory('SUM:model(f1[0.8,0,1]*BWxCB, bkg)')
 #w.factory('SUM:model(fsig[5.94226e-01]*BWxCB, bkg)')
 
-w.factory('Gaussian::gauss3(x,meanGauss3[90,40,100],sigmaGauss3[10, 0, 100])')
+w.factory('Gaussian::gauss3(x,meanGauss3[50,40,100],sigmaGauss3[10, 0, 100])')
 
 w.factory("ArgusBG:argus(x, 100, argpar[-20,-100,-1])")
 #w.factory('SUM:BWplusDCB(fsig*bw,DCB)')
-w.factory('SUM:genmz1(fsig*singleCB, gauss)')
+w.factory('SUM:genmz1(f1*singleCB, gauss)')
 w.factory('Gaussian::gauss2(x,meanGauss2[90,40,100],sigmaGauss2[10, 0, 100])')
 #w.factory('Gaussian::gauss2(x,meanGauss2[9.22526e+01],sigmaGauss2[1.66743e+00])')
 #w.factory('SUM:pdfgenmz1(fsig2[8.82722e-01]*genmz1, gauss2)')
-w.factory('SUM:pdfgenmz1(fsig2[0.9,0.5,1]*genmz1, gauss2)')
-w.factory('SUM:pdfpdfgenmz1(fsig3[0.9,0.5,1]*pdfgenmz1, gauss3)')
+w.factory('SUM:pdfgenmz1(f2[0.9,0.5,1]*genmz1, gauss2)')
+w.factory('SUM:pdfpdfgenmz1(f3[0.9,0.5,1]*pdfgenmz1, gauss3)')
 
 
 #w.factory('SUM:pdfgenmz1(fsig*doubleCB, argus)')
@@ -129,12 +145,13 @@ dataHist1 = RooDataHist('dataHist1', 'dataHist1', RooArgList(w.var('x')), HIST1,
 pdf = w.pdf(pdfName)
 
 
-fFit = pdf.fitTo(dataHist1)
+fFit = pdf.fitTo(dataHist1,RooFit.Save(kTRUE))
 
 
-print w.var("sigmaCB").getError()
-print w.var("sigmaCB").getAsymErrorHi()
-print w.var("sigmaCB").getAsymErrorLo()
+
+#print w.var("sigmaCB").getError()
+#print w.var("sigmaCB").getAsymErrorHi()
+#print w.var("sigmaCB").getAsymErrorLo()
 
 
 
@@ -146,13 +163,13 @@ dataHist1.plotOn(xframe, RooFit.MarkerStyle(20), RooFit.MarkerColor(1))
 pdf.plotOn(xframe, RooFit.LineColor(4), RooFit.LineWidth(2) )
 if pdfName == 'model':
    pdf.plotOn(xframe, RooFit.LineColor(4), RooFit.LineWidth(2), RooFit.Components("bkg"), RooFit.LineStyle(kDashed))
-pdf.paramOn(xframe, RooFit.Layout(0.17, 0.4, 0.9), RooFit.Format("NE", RooFit.FixedPrecision(4)))
+pdf.paramOn(xframe, RooFit.Layout(0.17, 0.4, 0.9), RooFit.Format("NE", RooFit.FixedPrecision(5)))
 
 c1 = TCanvas("c1", "c1", 800, 800)
 #c1.SetLogy()
 dummy = TH1D("dummy","dummy",1,binInfo[1],binInfo[2])
 #dummy = TH1D("dummy","dummy",1, 92,96)#binInfo[1],binInfo[2])
-dummy.SetMinimum(10)
+dummy.SetMinimum(0)
 yMax1 = HIST1.GetMaximum()*1.5
 #yMax2 = HIST2.GetMaximum()*1.5
 yMax = yMax1
@@ -167,6 +184,8 @@ dummy.GetXaxis().SetTitle(xTitle)
 dummy.Draw()
 
 xframe.Draw('same')
+chi2 = xframe.chiSquare(fFit.floatParsFinal().getSize())
+dof =  fFit.floatParsFinal().getSize()
 
 HIST1.SetLineColor(1)
 HIST1.SetLineWidth(1)
@@ -185,6 +204,7 @@ latex.SetTextSize(0.45*c1.GetTopMargin())
 latex.SetTextFont(42)
 latex.SetTextAlign(11)
 latex.DrawLatex(0.45, 0.85, latexNote1)
+latex.DrawLatex(0.6, 0.3, "#chi^{2}/DOF = %.3f" %(chi2/dof))
 #if len(latexNote2) > 0:
 #   latex.DrawLatex(0.45, 0.75, latexNote2)
 c1.SaveAs(savePath+saveName+'.png')

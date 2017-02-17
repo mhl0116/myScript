@@ -8,7 +8,7 @@ mc2016_dy_path_withgenpt = '/raid/raid9/mhl/HZZ4L_Run2/HZZ4L/PereventMassErrCorr
 mc2015_dy_path_v4 = "/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_2015MC/HZZ4L_Mass/makeSlimTree/DY_2015MC_kalman_v4/"
 mc2015_dy_path_v4_NoMZCut = "/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_2015MC/HZZ4L_Mass/makeSlimTree/DY_2015MC_kalman_v4_NOmassZCut/"
 
-savePath = '/home/mhl/public_html/2016/20161120_mass/'
+savePath = '/home/mhl/public_html/2017/20170116_electronPtErr/'
 
 #make plots in different ptEta bins
 skimmedDY_cut = 'massZ > 80 && massZ < 100 && massZErr > 0.2 && massZErr < 7.2 && Met < 30 && '
@@ -819,13 +819,13 @@ paraConfigs[saveName] = \
 
 
 
-saveName = 'DY15_MC_relMassZErr'
+saveName = 'DY15_MC_relMassZErr_e'
 paraConfigs[saveName] = \
 {\
-'rootPath1': mc2015_dy_path_v4,
-'rootPath2': mc2015_dy_path_v4,
-'rootfile1': 'DYJetsToLL_M-50_kalman_v4_m2mu.root',
-'rootfile2': 'DYJetsToLL_M-50_kalman_v4_m2mu.root',
+'rootPath1': '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/outputRoot/DY_2015MC_kalman_v4_NOmassZCut_addpTScaleCorrection/',
+'rootPath2': '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/outputRoot/DY_2015MC_kalman_v4_NOmassZCut_addpTScaleCorrection/',
+'rootfile1': 'DYJetsToLL_M-50_kalman_v4_m2e.root',
+'rootfile2': 'DYJetsToLL_M-50_kalman_v4_m2e.root',
 'tree1': 'passedEvents',
 'tree2': 'passedEvents',
 'binInfo': [100, 0, 0.05],
@@ -842,7 +842,10 @@ paraConfigs[saveName] = \
 'savePath': savePath,
 'saveName': saveName, #
 'latexNote1': ' ', #latexNote1_mu_pt_eta, #
-'latexNote2': ' ' #latexNote2_mu_pt_eta
+'latexNote2': ' ', #latexNote2_mu_pt_eta
+'doFit': False,
+'pdfName': 'bw'
+
 }
 
 saveName = 'DY15_MC_massZErr'
@@ -1018,6 +1021,68 @@ paraConfigs[saveName] = \
 'pdfName': 'bw'
 }
 
+saveName = 'DY_2015_eta_eta_0_0p8_diffrelPtErr_e'
+paraConfigs[saveName] = \
+{\
+'rootPath1': mc2015_dy_path_v4_NoMZCut,
+'rootfile1': 'DYJetsToLL_M-50_kalman_v4_m2e.root',
+'rootPath2': mc2015_dy_path_v4_NoMZCut,
+'rootfile2': 'DYJetsToLL_M-50_kalman_v4_m2e.root',
+'tree1': 'passedEvents',
+'tree2': 'passedEvents',
+'binInfo': [100, 0, 0.8],
+'vars1': ['abs(genLep_eta1)', 'abs(genLep_eta2)'],
+'vars2': ['abs(genLep_eta1)', 'abs(genLep_eta2)'],
+'cuts1': ['genzm > 80 && genzm < 100 && genLep_pt1 > 7 && genLep_pt1 < 100 && massZ > 80 && massZ < 100 && abs(genLep_eta1) < 0.8 && pterr1/genLep_pt1 < 0.02',\
+          'genzm > 80 && genzm < 100 && genLep_pt2 > 7 && genLep_pt2 < 100 && massZ > 80 && massZ < 100 && abs(genLep_eta2) < 0.8 && pterr2/genLep_pt2 < 0.02'],
+'cuts2': ['genzm > 80 && genzm < 100 && genLep_pt1 > 7 && genLep_pt1 < 100 && massZ > 80 && massZ < 100 && abs(genLep_eta1) < 0.8 && pterr1/genLep_pt1 > 0.03',\
+          'genzm > 80 && genzm < 100 && genLep_pt2 > 7 && genLep_pt2 < 100 && massZ > 80 && massZ < 100 && abs(genLep_eta2) < 0.8 && pterr2/genLep_pt2 > 0.03'], #
+'weight1': ['1', '1'],
+'weight2': ['1', '1'],
+'xTitle': 'eta',
+'yTitle': '',
+'savePath': savePath, 
+'saveName': saveName, #
+'latexNote1': ' ',
+'latexNote2': ' ',
+'legend1': 'pterr/pt < 0.02',
+'legend2': 'pterr/pt > 0.03',
+'doFit': False,
+'pdfName': 'bw'
+}
+
+
+
+saveName = 'DY_2015_eta_eta_0p8_1p44_diffrelPtErr_e'
+paraConfigs[saveName] = \
+{\
+'rootPath1': mc2015_dy_path_v4_NoMZCut,
+'rootfile1': 'DYJetsToLL_M-50_kalman_v4_m2e.root',
+'rootPath2': mc2015_dy_path_v4_NoMZCut,
+'rootfile2': 'DYJetsToLL_M-50_kalman_v4_m2e.root',
+'tree1': 'passedEvents',
+'tree2': 'passedEvents',
+'binInfo': [100, 0.8, 1.5],
+'vars1': ['abs(genLep_eta1)', 'abs(genLep_eta2)'],
+'vars2': ['abs(genLep_eta1)', 'abs(genLep_eta2)'],
+'cuts1': ['genzm > 80 && genzm < 100 && genLep_pt1 > 7 && genLep_pt1 < 100 && massZ > 80 && massZ < 100 && abs(genLep_eta1) < 1.44 && abs(genLep_eta1) > 0.8 && pterr1/genLep_pt1 < 0.02',\
+          'genzm > 80 && genzm < 100 && genLep_pt2 > 7 && genLep_pt2 < 100 && massZ > 80 && massZ < 100 && abs(genLep_eta2) < 1.44 && abs(genLep_eta2) > 0.8 && pterr2/genLep_pt2 < 0.02'],
+'cuts2': ['genzm > 80 && genzm < 100 && genLep_pt1 > 7 && genLep_pt1 < 100 && massZ > 80 && massZ < 100 && abs(genLep_eta1) < 1.44 && abs(genLep_eta1) > 0.8 && pterr1/genLep_pt1 > 0.02 ',\
+          'genzm > 80 && genzm < 100 && genLep_pt2 > 7 && genLep_pt2 < 100 && massZ > 80 && massZ < 100 && abs(genLep_eta2) < 1.44 && abs(genLep_eta2) > 0.8 && pterr2/genLep_pt2 > 0.02 '], #
+'weight1': ['1', '1'],
+'weight2': ['1', '1'],
+'xTitle': 'eta',
+'yTitle': '',
+'savePath': savePath, 
+'saveName': saveName, #
+'latexNote1': ' ',
+'latexNote2': ' ',
+'legend1': 'pterr/pt < 0.02',
+'legend2': 'pterr/pt > 0.02',
+'doFit': False,
+'pdfName': 'bw'
+}
+
 
 saveName = 'DY_2015_eta_eta_1p57_2p5_diffrelPtErr_e'
 paraConfigs[saveName] = \
@@ -1048,4 +1113,506 @@ paraConfigs[saveName] = \
 'doFit': False,
 'pdfName': 'bw'
 }
- 
+
+
+saveName = 'DY_2015_eta_eta_2_2p5_diffrelPtErr_e'
+paraConfigs[saveName] = \
+{\
+'rootPath1': mc2015_dy_path_v4_NoMZCut,
+'rootfile1': 'DYJetsToLL_M-50_kalman_v4_m2e.root',
+'rootPath2': mc2015_dy_path_v4_NoMZCut,
+'rootfile2': 'DYJetsToLL_M-50_kalman_v4_m2e.root',
+'tree1': 'passedEvents',
+'tree2': 'passedEvents',
+'binInfo': [100, 2, 2.5],
+'vars1': ['abs(genLep_eta1)', 'abs(genLep_eta2)'],
+'vars2': ['abs(genLep_eta1)', 'abs(genLep_eta2)'],
+'cuts1': ['genzm > 80 && genzm < 100 && genLep_pt1 > 7 && genLep_pt1 < 100 && massZ > 80 && massZ < 100 && abs(genLep_eta1) < 2.5 && abs(genLep_eta1) > 2  && pterr1/genLep_pt1 < 0.025',\
+          'genzm > 80 && genzm < 100 && genLep_pt2 > 7 && genLep_pt2 < 100 && massZ > 80 && massZ < 100 && abs(genLep_eta2) < 2.5 && abs(genLep_eta2) > 2 && pterr2/genLep_pt2 < 0.025'],
+'cuts2': ['genzm > 80 && genzm < 100 && genLep_pt1 > 7 && genLep_pt1 < 100 && massZ > 80 && massZ < 100 && abs(genLep_eta1) < 2.5 && abs(genLep_eta1) > 2 && pterr1/genLep_pt1 > 0.025 ',\
+          'genzm > 80 && genzm < 100 && genLep_pt2 > 7 && genLep_pt2 < 100 && massZ > 80 && massZ < 100 && abs(genLep_eta2) < 2.5 && abs(genLep_eta2) > 2 && pterr2/genLep_pt2 > 0.025 '], #
+'weight1': ['1', '1'],
+'weight2': ['1', '1'],
+'xTitle': 'eta',
+'yTitle': '',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': ' ',
+'latexNote2': ' ',
+'legend1': 'pterr/pt < 0.025',
+'legend2': 'pterr/pt > 0.025',
+'doFit': False,
+'pdfName': 'bw'
+}
+
+
+saveName = 'DY_2015_2e_ecalDriven'
+paraConfigs[saveName] = \
+{\
+'rootPath1': mc2015_dy_path_v4_NoMZCut,
+'rootfile1': 'DYJetsToLL_M-50_kalman_v4_m2e.root',
+'rootPath2': mc2015_dy_path_v4_NoMZCut,
+'rootfile2': 'DYJetsToLL_M-50_kalman_v4_m2e.root',
+'tree1': 'passedEvents',
+'tree2': 'passedEvents',
+'binInfo': [2, 0, 2],
+'vars1': ['lep1_ecalDriven', 'lep2_ecalDriven'],
+'vars2': ['lep1_ecalDriven', 'lep2_ecalDriven'],
+'cuts1': ['genzm > 80 && genzm < 100 && genLep_pt1 > 7 && genLep_pt1 < 100 && massZ > 80 && massZ < 100',\
+          'genzm > 80 && genzm < 100 && genLep_pt2 > 7 && genLep_pt2 < 100 && massZ > 80 && massZ < 100'],
+'cuts2': ['genzm > 80 && genzm < 100 && genLep_pt1 > 7 && genLep_pt1 < 100 && massZ > 80 && massZ < 100',\
+          'genzm > 80 && genzm < 100 && genLep_pt2 > 7 && genLep_pt2 < 100 && massZ > 80 && massZ < 100'], #
+'weight1': ['1', '1'],
+'weight2': ['1', '1'],
+'xTitle': 'isEcalDriven',
+'yTitle': '',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': ' ',
+'latexNote2': ' ',
+'legend1': '',
+'legend2': '',
+'doFit': False,
+'pdfName': 'bw'
+}
+
+
+saveName = 'DY_2015_relPtErr_2e'
+paraConfigs[saveName] = \
+{\
+'rootPath1': mc2015_dy_path_v4_NoMZCut,
+'rootfile1': 'DYJetsToLL_M-50_kalman_v4_m2e.root',
+'rootPath2': mc2015_dy_path_v4_NoMZCut,
+'rootfile2': 'DYJetsToLL_M-50_kalman_v4_m2e.root',
+'tree1': 'passedEvents',
+'tree2': 'passedEvents',
+'binInfo': [100, 0, 0.1],
+'vars1': ['pterr1/genLep_pt1', 'pterr2/genLep_pt2'],
+'vars2': ['pterr1/genLep_pt1', 'pterr2/genLep_pt2'],
+'cuts1': ['genzm > 80 && genzm < 100 && genLep_pt1 > 7 && genLep_pt1 < 100 && massZ > 80 && massZ < 100 && abs(genLep_eta1) < 1',\
+          'genzm > 80 && genzm < 100 && genLep_pt2 > 7 && genLep_pt2 < 100 && massZ > 80 && massZ < 100 && abs(genLep_eta2) < 1'],
+'cuts2': ['genzm > 80 && genzm < 100 && genLep_pt1 > 7 && genLep_pt1 < 100 && massZ > 80 && massZ < 100 && abs(genLep_eta1) > 1',\
+          'genzm > 80 && genzm < 100 && genLep_pt2 > 7 && genLep_pt2 < 100 && massZ > 80 && massZ < 100 && abs(genLep_eta2) > 1'], #
+'weight1': ['1', '1'],
+'weight2': ['1', '1'],
+'xTitle': 'pterr/pt_{gen}',
+'yTitle': '',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': ' ',
+'latexNote2': ' ',
+'legend1': '|eta| < 1',
+'legend2': '|eta| > 1',
+'doFit': False,
+'pdfName': 'bw'
+}
+
+saveName = 'DY_2015_relmZErr_2e'
+paraConfigs[saveName] = \
+{\
+'rootPath1': mc2015_dy_path_v4_NoMZCut,
+'rootfile1': 'DYJetsToLL_M-50_kalman_v4_m2e.root',
+'rootPath2': mc2015_dy_path_v4_NoMZCut,
+'rootfile2': 'DYJetsToLL_M-50_kalman_v4_m2e.root',
+'tree1': 'passedEvents',
+'tree2': 'passedEvents',
+'binInfo': [100, 0, 0.1],
+'vars1': ['massZErr/massZ'],
+'vars2': ['massZErr/massZ'],
+'cuts1': ['genLep_pt1 > 7 && genLep_pt2 >7 && massZ > 60 && massZ < 120'],
+'cuts2': ['genLep_pt1 > 7 && genLep_pt2 >7 && massZ > 60 && massZ < 120'],
+'weight1': ['1', '1'],
+'weight2': ['1', '1'],
+'xTitle': 'massZErr/massZ',
+'yTitle': '',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': ' ',
+'latexNote2': ' ',
+'legend1': '',
+'legend2': '',
+'doFit': False,
+'pdfName': 'bw'
+}
+
+saveName = 'DY_2015_massZErr_2mu'
+paraConfigs[saveName] = \
+{\
+'rootPath1': mc2015_dy_path_v4_NoMZCut,
+'rootfile1': 'DYJetsToLL_M-50_kalman_v4_m2mu.root',
+'rootPath2': mc2015_dy_path_v4_NoMZCut,
+'rootfile2': 'DYJetsToLL_M-50_kalman_v4_m2mu.root',
+'tree1': 'passedEvents',
+'tree2': 'passedEvents',
+'binInfo': [100, 0, 100],
+'vars1': ['massZErr'],
+'vars2': ['massZErr'],
+'cuts1': ['genzm > 80 && genzm < 100 && genLep_pt1 > 7 && genLep_pt1 < 100 && massZ > 80 && massZ < 100 '],
+'cuts2': ['genzm > 80 && genzm < 100 && genLep_pt1 > 7 && genLep_pt1 < 100 && massZ > 80 && massZ < 100 '],
+'weight1': ['1', '1'],
+'weight2': ['1', '1'],
+'xTitle': 'massZErr',
+'yTitle': '',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': ' ',
+'latexNote2': ' ',
+'legend1': '',
+'legend2': '',
+'doFit': False,
+'pdfName': 'bw'
+}
+
+
+saveName = 'DY_2015_massZErr_2e'
+paraConfigs[saveName] = \
+{\
+'rootPath1': mc2015_dy_path_v4_NoMZCut,
+'rootfile1': 'DYJetsToLL_M-50_kalman_v4_m2e.root',
+'rootPath2': mc2015_dy_path_v4_NoMZCut,
+'rootfile2': 'DYJetsToLL_M-50_kalman_v4_m2e.root',
+'tree1': 'passedEvents',
+'tree2': 'passedEvents',
+'binInfo': [100, 0, 10],
+'vars1': ['massZErr'],
+'vars2': ['massZErr'],
+'cuts1': ['massZ > 60 && massZ < 120 && genLep_pt1 > 7 && genLep_pt1 < 100 '],
+'cuts2': ['massZ > 60 && massZ < 120 && genLep_pt1 > 7 && genLep_pt1 < 100 '],
+'weight1': ['1', '1'],
+'weight2': ['1', '1'],
+'xTitle': 'massZErr',
+'yTitle': '',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': ' ',
+'latexNote2': ' ',
+'legend1': '',
+'legend2': '',
+'doFit': False,
+'pdfName': 'bw'
+}
+
+
+saveName = 'DY_2015_ecalDriven_2e'
+paraConfigs[saveName] = \
+{\
+'rootPath1': mc2015_dy_path_v4_NoMZCut,
+'rootfile1': 'DYJetsToLL_M-50_kalman_v4_m2e.root',
+'rootPath2': mc2015_dy_path_v4_NoMZCut,
+'rootfile2': 'DYJetsToLL_M-50_kalman_v4_m2e.root',
+'tree1': 'passedEvents',
+'tree2': 'passedEvents',
+'binInfo': [2, 0, 2],
+'vars1': ['lep1_ecalDriven', 'lep2_ecalDriven'],
+'vars2': ['lep1_ecalDriven', 'lep2_ecalDriven'],
+'cuts1': ['massZ > 60 && massZ < 120 && genLep_pt1 > 7 && genLep_pt1 < 100 ', 'massZ > 60 && massZ < 120 && genLep_pt1 > 7 && genLep_pt1 < 100'],
+'cuts2': ['massZ > 60 && massZ < 120 && genLep_pt1 > 7 && genLep_pt1 < 100 ', 'massZ > 60 && massZ < 120 && genLep_pt1 > 7 && genLep_pt1 < 100'],
+'weight1': ['1', '1'],
+'weight2': ['1', '1'],
+'xTitle': 'ecal Driven',
+'yTitle': '',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': ' ',
+'latexNote2': ' ',
+'legend1': '',
+'legend2': '',
+'doFit': False,
+'pdfName': 'bw'
+}
+
+
+saveName = 'DY_2015_massZErr_ifRelMassZErrBigger0p03_2e'
+paraConfigs[saveName] = \
+{\
+'rootPath1': mc2015_dy_path_v4_NoMZCut,
+'rootfile1': 'DYJetsToLL_M-50_kalman_v4_m2e.root',
+'rootPath2': mc2015_dy_path_v4_NoMZCut,
+'rootfile2': 'DYJetsToLL_M-50_kalman_v4_m2e.root',
+'tree1': 'passedEvents',
+'tree2': 'passedEvents',
+'binInfo': [100,0,20],
+'vars1': ['massZErr'],
+'vars2': ['massZErr'],
+'cuts1': ['massZ > 60 && massZ < 120 && genLep_pt1 > 7 && genLep_pt1 < 100 && massZErr/massZ > 0.04'],
+'cuts2': ['massZ > 60 && massZ < 120 && genLep_pt1 > 7 && genLep_pt1 < 100 && massZErr/massZ > 0.04'],
+'weight1': ['1', '1'],
+'weight2': ['1', '1'],
+'xTitle': 'massZErr',
+'yTitle': '',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': ' ',
+'latexNote2': ' ',
+'legend1': '',
+'legend2': '',
+'doFit': False,
+'pdfName': 'bw'
+}
+
+skimmedDY_cut = 'massZ > 80 && massZ < 100 && massZErr > 0.2 && massZErr < 7.2 && Met < 30 && '
+
+paraConfigs['mc_DY15_genm2l_recoZ_eta_0_0p9'] = \
+{\
+'rootPath1': mc2015_dy_path_v4_NoMZCut,
+'rootPath2': mc2015_dy_path_v4_NoMZCut,
+'rootfile1': 'DYJetsToLL_M-50_kalman_v4_m2mu.root',
+'rootfile2': 'DYJetsToLL_M-50_kalman_v4_m2mu.root',
+'tree1': 'passedEvents',
+'tree2': 'passedEvents',
+'binInfo': [100, 80, 100],
+'vars1': ['GENmass2l'],
+'vars2': ['massZ'],
+'cuts1': [skimmedDY_cut + '  abs(genLep_eta1) < 0.9 && abs(genLep_eta2) < 0.9 && genLep_pt1 > 0 && genLep_pt2 > 0'], #
+'cuts2': [skimmedDY_cut + '  abs(genLep_eta1) < 0.9 && abs(genLep_eta2) < 0.9 && genLep_pt1 > 0 && genLep_pt2 > 0'], #
+'weight1': ['1'],
+'weight2': ['1'],
+'xTitle': 'massZ(GeV)',
+'yTitle': 'Rate/'+str(20/100)+' GeV',
+'legend1': '2015MC, GENmass2l',
+'legend2': '2015MC, m_{Z}^{RECO}',
+'savePath': savePath,
+'saveName': 'mc_DY15_genm2l_recoZ_eta_0_0p9', #
+'latexNote1': '|#eta|^{lep1} < 0.9', #
+'latexNote2': '|#eta|^{lep2} < 0.9',
+'doFit': False,
+'pdfName': 'bw'
+}
+
+saveName = 'data15_2mu_relM2lErr'
+paraConfigs[saveName] = \
+{\
+'rootPath1': '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/outputRoot/Data_2015D/',
+'rootPath2': '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/outputRoot/Data_2015D/',
+'rootfile1': 'DoubleLepton_m2mu.root',
+'rootfile2': 'DoubleLepton_m2mu.root',
+'tree1': 'passedEvents',
+'tree2': 'passedEvents',
+'binInfo': [100, 0, 0.05],
+'vars1': ['massZErr/massZ'],
+'vars2': ['massZErr/massZ'],
+'cuts1': ['massZ > 60 && massZ < 120'], 
+'cuts2': ['massZ > 60 && massZ < 120'],
+'weight1': ['1'],
+'weight2': ['1'],
+'xTitle': 'massZErr/massZ',
+'yTitle': '',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': '',
+'latexNote2': '',
+'legend1': '',
+'legend2': '',
+'doFit': False,
+'pdfName': 'bw'
+}
+
+
+saveName = 'data15_DYMC15_2mu_met'
+paraConfigs[saveName] = \
+{\
+'rootPath1': '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/outputRoot/Data_2015D/',
+'rootPath2': '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_2015MC/HZZ4L_Mass/makeSlimTree/DY_2015MC_kalman_v4_NOmassZCut/',
+'rootfile1': 'DoubleLepton_m2mu.root',
+'rootfile2': 'DYJetsToLL_M-50_kalman_v4_m2mu.root',
+'tree1': 'passedEvents',
+'tree2': 'passedEvents',
+'binInfo': [100, 0, 50],
+'vars1': ['Met'],
+'vars2': ['Met'],
+'cuts1': ['massZ > 60 && massZ < 120'],
+'cuts2': ['massZ > 60 && massZ < 120'],
+'weight1': ['1'],
+'weight2': ['1'],
+'xTitle': 'met',
+'yTitle': '',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': '',
+'latexNote2': '',
+'legend1': 'data',
+'legend2': 'mc',
+'doFit': False,
+'pdfName': 'bw'
+}
+
+
+saveName = 'dymc15_h15_pterr_test'
+paraConfigs[saveName] = \
+{\
+'rootPath1': '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/CMSSW_7_6_4/src/',
+'rootPath2': '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_2015MC/HZZ4L_Mass/makeSlimTree/DY_2015MC_kalman_v4_NOmassZCut/',
+'rootfile1': 'GluGluHToZZTo4L_M125_13TeV_powheg2_JHUgenV6_pythia8_RunIIFall15MiniAODv2.root',
+'rootfile2': 'DYJetsToLL_M-50_kalman_v4_m2mu.root',
+'tree1': 'Ana/passedEvents',
+'tree2': 'passedEvents',
+'binInfo': [1000, 0, 0.1],
+'vars1': ['lep_pterr[0]/lep_pt[0]', \
+          'lep_pterr[1]/lep_pt[1]', \
+          'lep_pterr[2]/lep_pt[2]', \
+          'lep_pterr[3]/lep_pt[3]'],
+'vars2': ['pterr1/pT1', 'pterr2/pT2'],
+'cuts1': ['lep_tightId[0] && (lep_RelIso)[0] < 0.35 && abs(lep_id[0])==13 && abs(lep_eta[0]) < 0.9 && lep_pt[0] < 40 && lep_pt[0] > 10 && passedFullSelection && mass4l > 105 && mass4l < 140', \
+          'lep_tightId[1] && (lep_RelIso)[1] < 0.35 && abs(lep_id[1])==13 && abs(lep_eta[1]) < 0.9 && lep_pt[1] < 40 && lep_pt[1] > 10 && passedFullSelection && mass4l > 105 && mass4l < 140', \
+          'lep_tightId[2] && (lep_RelIso)[2] < 0.35 && abs(lep_id[2])==13 && abs(lep_eta[2]) < 0.9 && lep_pt[2] < 40 && lep_pt[2] > 10 && passedFullSelection && mass4l > 105 && mass4l < 140', \
+          'lep_tightId[3] && (lep_RelIso)[3] < 0.35 && abs(lep_id[3])==13 && abs(lep_eta[3]) < 0.9 && lep_pt[3] < 40 && lep_pt[3] > 10 && passedFullSelection && mass4l > 105 && mass4l < 140'],
+'cuts2': ['abs(eta1)<0.9 && pT1 < 40 && pT1 > 10', 'abs(eta2)<0.9 && pT2 < 40 && pT2 > 10'],
+'weight1': ['1', '1', '1', '1'],
+'weight2': ['1', '1'],
+'xTitle': 'pterr/pt',
+'yTitle': '',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': '',
+'latexNote2': '',
+'legend1': 'higgsMC',
+'legend2': 'DYMC',
+'doFit': False,
+'pdfName': 'bw'
+}
+
+
+saveName = 'DYMC15_76corr_80corr_pterr_mu_pt_10_40_eta_0_0p9'
+paraConfigs[saveName] = \
+{\
+'rootPath1': '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/outputRoot/DY_2015MC_kalman_v4_76X/',
+'rootPath2': '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_2015MC/HZZ4L_Mass/makeSlimTree/DY_2015MC_kalman_v4_NOmassZCut/',
+'rootfile1': 'DYJetsToLL_M-50_kalman_v4_m2mu.root',
+'rootfile2': 'DYJetsToLL_M-50_kalman_v4_m2mu.root',
+'tree1': 'passedEvents',
+'tree2': 'passedEvents',
+'binInfo': [100, 0, 0.1],
+'vars1': ['pterr1/pT1', 'pterr2/pT2'],
+'vars2': ['pterr1/pT1', 'pterr2/pT2'],
+'cuts1': ['massZ > 60 && massZ < 120 && pT1 > 10 && pT1 < 40 && abs(eta1) < 0.9', 'massZ > 60 && massZ < 120 && pT2 > 10 && pT2 < 40 && abs(eta2) < 0.9'],
+'cuts2': ['massZ > 60 && massZ < 120 && pT1 > 10 && pT1 < 40 && abs(eta1) < 0.9', 'massZ > 60 && massZ < 120 && pT2 > 10 && pT2 < 40 && abs(eta2) < 0.9'],
+'weight1': ['1','1'],
+'weight2': ['1','1'],
+'xTitle': 'pterr/pt',
+'yTitle': '',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': '',
+'latexNote2': '',
+'legend1': '76x correction on 76x mc',
+'legend2': '80x correction on 76x mc',
+'doFit': False,
+'pdfName': 'bw'
+}
+
+
+saveName = 'DYMC15_76corr_80corr_pterr_mu'
+paraConfigs[saveName] = \
+{\
+'rootPath1': '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/outputRoot/DY_2015MC_kalman_v4_76X/',
+'rootPath2': '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_2015MC/HZZ4L_Mass/makeSlimTree/DY_2015MC_kalman_v4_NOmassZCut/',
+'rootfile1': 'DYJetsToLL_M-50_kalman_v4_m2mu.root',
+'rootfile2': 'DYJetsToLL_M-50_kalman_v4_m2mu.root',
+'tree1': 'passedEvents',
+'tree2': 'passedEvents',
+'binInfo': [100, 0, 0.1],
+'vars1': ['pterr1/pT1', 'pterr2/pT2'],
+'vars2': ['pterr1/pT1', 'pterr2/pT2'],
+'cuts1': ['massZ > 60 && massZ < 120', 'massZ > 60 && massZ < 120'],
+'cuts2': ['massZ > 60 && massZ < 120', 'massZ > 60 && massZ < 120'],
+'weight1': ['1','1'],
+'weight2': ['1','1'],
+'xTitle': 'pterr/pt',
+'yTitle': '',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': '',
+'latexNote2': '',
+'legend1': '76x correction on 76x mc',
+'legend2': '80x correction on 76x mc',
+'doFit': False,
+'pdfName': 'bw'
+}
+
+
+saveName = 'DYMC15_76corr_80corr_pt_mu'
+paraConfigs[saveName] = \
+{\
+'rootPath1': '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/outputRoot/DY_2015MC_kalman_v4_76X/',
+'rootPath2': '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_2015MC/HZZ4L_Mass/makeSlimTree/DY_2015MC_kalman_v4_NOmassZCut/',
+'rootfile1': 'DYJetsToLL_M-50_kalman_v4_m2mu.root',
+'rootfile2': 'DYJetsToLL_M-50_kalman_v4_m2mu.root',
+'tree1': 'passedEvents',
+'tree2': 'passedEvents',
+'binInfo': [100, 0, 100],
+'vars1': ['pT1', 'pT2'],
+'vars2': ['pT1', 'pT2'],
+'cuts1': ['massZ > 60 && massZ < 120', 'massZ > 60 && massZ < 120'],
+'cuts2': ['massZ > 60 && massZ < 120', 'massZ > 60 && massZ < 120'],
+'weight1': ['1','1'],
+'weight2': ['1','1'],
+'xTitle': 'pterr/pt',
+'yTitle': '',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': '',
+'latexNote2': '',
+'legend1': '76x correction on 76x mc',
+'legend2': '80x correction on 76x mc',
+'doFit': False,
+'pdfName': 'bw'
+}
+
+
+saveName = 'DY15_data_mc_pterr_e'
+paraConfigs[saveName] = \
+{\
+'rootPath1': '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/outputRoot/Data_2015D/',
+'rootPath2': '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_2015MC/HZZ4L_Mass/makeSlimTree/DY_2015MC_kalman_v4_NOmassZCut/',
+'rootfile1': 'DoubleLepton_m2e.root',
+'rootfile2': 'DYJetsToLL_M-50_kalman_v4_m2e.root',
+'tree1': 'passedEvents',
+'tree2': 'passedEvents',
+'binInfo': [100, 0, 0.1],
+'vars1': ['pterr1/pT1', 'pterr2/pT2'],
+'vars2': ['pterr1/pT1', 'pterr2/pT2'],
+'cuts1': ['massZ > 60 && massZ < 120', 'massZ > 60 && massZ < 120'],
+'cuts2': ['massZ > 60 && massZ < 120', 'massZ > 60 && massZ < 120'],
+'weight1': ['1','1'],
+'weight2': ['1','1'],
+'xTitle': 'pterr/pt',
+'yTitle': '',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': '',
+'latexNote2': '',
+'legend1': 'data',
+'legend2': 'mc',
+'doFit': False,
+'pdfName': 'bw'
+}
+
+
+saveName = 'DY15_data_mc_pt_e'
+paraConfigs[saveName] = \
+{\
+'rootPath1': '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/outputRoot/Data_2015D/',
+'rootPath2': '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_2015MC/HZZ4L_Mass/makeSlimTree/DY_2015MC_kalman_v4_NOmassZCut/',
+'rootfile1': 'DoubleLepton_m2e.root',
+'rootfile2': 'DYJetsToLL_M-50_kalman_v4_m2e.root',
+'tree1': 'passedEvents',
+'tree2': 'passedEvents',
+'binInfo': [100, 0, 100],
+'vars1': ['pT1', 'pT2'],
+'vars2': ['pT1', 'pT2'],
+'cuts1': ['massZ > 60 && massZ < 120', 'massZ > 60 && massZ < 120'],
+'cuts2': ['massZ > 60 && massZ < 120', 'massZ > 60 && massZ < 120'],
+'weight1': ['1','1'],
+'weight2': ['1','1'],
+'xTitle': 'pt',
+'yTitle': '',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': '',
+'latexNote2': '',
+'legend1': 'data',
+'legend2': 'mc',
+'doFit': False,
+'pdfName': 'bw'
+}
+
