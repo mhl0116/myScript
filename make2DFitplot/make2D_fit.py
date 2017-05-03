@@ -8,8 +8,8 @@ ROOT.gSystem.Load('libHiggsAnalysisCombinedLimit.so')
 import sys
 
 inputRootPath = "/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/inputRoot/ggHSampleToMakeErrTemplate/"
-outputPlotPath = "/home/mhl/public_html/2017/20170216_fitTailParaFor2DModel/"
-modelPath = "/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/doMeasurement/CreateDatacards_Moriond17_tune4e_20170214/"
+outputPlotPath = "/home/mhl/public_html/2017/20170223_makeModel/"
+modelPath = "/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/doMeasurement/CreateDatacards_Moriond17_expect_20170222/"
 channels = ["4mu","4e","2e2mu"]
 m4lTypes = ["reco","refit"]
 
@@ -165,7 +165,7 @@ inputConfig = \
 "var1High" : 140,
 #"var2Low" : 0.007,
 #"var2High" : 0.1, #
-"nbins1" : 70,
+"nbins1" : 100,
 "nbins2" : 100,
 #"cut" : "passedFullSelection && ", #
 "isUnbin" : False,
@@ -177,16 +177,16 @@ cutREFIT = {"reco" : " mass4l > 105 && mass4l < 140 && ",\
             "refit": " mass4lREFIT > 105 && mass4lREFIT < 140 && " }
 cutChannel = {"4mu" : " finalState == 1 ", "4e" : "finalState == 2 ", "2e2mu": "finalState > 2 "}
 
-dcbMean_reco = {"4mu":124.8, "4e":124.64, "2e2mu":124.75}
-dcbMean_refit = {"4mu":124.75, "4e":124.60, "2e2mu":124.71}
+dcbMean_reco = {"4mu":124.81, "4e":124.17, "2e2mu":124.51}
+dcbMean_refit = {"4mu":124.76, "4e":124.22, "2e2mu":124.54}
 dcbMean = {"reco":dcbMean_reco, "refit":dcbMean_refit}
 
-alpha_reco = {"4mu":1.26, "4e":0.93, "2e2mu":1.03}
-alpha_refit = {"4mu":1.28, "4e":0.89, "2e2mu":1.01}
+alpha_reco = {"4mu":1.27, "4e":0.80, "2e2mu":1.02}
+alpha_refit = {"4mu":1.25, "4e":0.77, "2e2mu":0.91}
 alpha = {"reco":alpha_reco, "refit":alpha_refit}
 
-alpha2_reco = {"4mu":1.86, "4e":1.35, "2e2mu":1.51}
-alpha2_refit = {"4mu":2.00, "4e":1.32, "2e2mu":1.54}
+alpha2_reco = {"4mu":1.89, "4e":1.49, "2e2mu":1.82}
+alpha2_refit = {"4mu":1.956, "4e":1.476, "2e2mu":1.59}
 alpha2 = {"reco":alpha2_reco, "refit":alpha2_refit}
 
 var2Low = {"4mu":0.005, "4e":0.007, "2e2mu":0.005}

@@ -1,6 +1,6 @@
 paraConfigs = { }
 
-savePath = '/home/mhl/public_html/2017/20170213_refineECorr/'
+savePath = '/home/mhl/public_html/2017/20170425_checkZPeak/'
 
 saveName = 'DY_MC2016_e_eta1_eta2_ifMassZErr_2_3'
 paraConfigs[saveName] = \
@@ -88,4 +88,129 @@ paraConfigs[saveName] = \
 'doLogZ': False,
 'latexNote1': ' '
 }
+
+
+saveName = 'mass4lErr_reco_refit_4mu'
+paraConfigs[saveName] = \
+{\
+'rootPath1': '/raid/raid5/dsperka/Run2/HZZ4l/SubmitArea_13TeV/Ana_ZZ4L_80X/',
+'rootfile1': 'Data_Run2016-03Feb2017_hzz4l_bestCandMela.root',
+'tree1': 'passedEvents',
+'binInfo_x': [100, 0, 0.1],
+'binInfo_y': [100, 0, 0.1],
+'vars1_x': ['mass4lErr/mass4l'],
+'vars1_y': ['mass4lErrREFIT/mass4lREFIT'],
+'cuts1': ['mass4l > 105 && mass4l < 140 && finalState==1'],
+'weight1': ['1'],
+'xTitle': 'm4lErr/m4l',
+'yTitle': 'm4lErrREFIT/m4lREFIT',
+'savePath': savePath,
+'saveName': saveName, #
+'doLogZ': False,
+'latexNote1': ' '
+}
+saveName = 'mass4lErr_reco_refit_4e'
+paraConfigs[saveName] = \
+{\
+'rootPath1': '/raid/raid5/dsperka/Run2/HZZ4l/SubmitArea_13TeV/Ana_ZZ4L_80X/',
+'rootfile1': 'Data_Run2016-03Feb2017_hzz4l_bestCandMela.root',
+'tree1': 'passedEvents',
+'binInfo_x': [100, 0, 0.1],
+'binInfo_y': [100, 0, 0.1],
+'vars1_x': ['mass4lErr/mass4l'],
+'vars1_y': ['mass4lErrREFIT/mass4lREFIT'],
+'cuts1': ['mass4l > 105 && mass4l < 140 && finalState==2'],
+'weight1': ['1'],
+'xTitle': 'm4lErr/m4l',
+'yTitle': 'm4lErrREFIT/m4lREFIT',
+'savePath': savePath,
+'saveName': saveName, #
+'doLogZ': False,
+'latexNote1': ' '
+}
+saveName = 'mass4lErr_reco_refit_2e2mu'
+paraConfigs[saveName] = \
+{\
+'rootPath1': '/raid/raid5/dsperka/Run2/HZZ4l/SubmitArea_13TeV/Ana_ZZ4L_80X/',
+'rootfile1': 'Data_Run2016-03Feb2017_hzz4l_bestCandMela.root',
+'tree1': 'passedEvents',
+'binInfo_x': [100, 0, 0.1],
+'binInfo_y': [100, 0, 0.1],
+'vars1_x': ['mass4lErr/mass4l'],
+'vars1_y': ['mass4lErrREFIT/mass4lREFIT'],
+'cuts1': ['mass4l > 105 && mass4l < 140 && finalState>2'],
+'weight1': ['1'],
+'xTitle': 'm4lErr/m4l',
+'yTitle': 'm4lErrREFIT/m4lREFIT',
+'savePath': savePath,
+'saveName': saveName, #
+'doLogZ': False,
+'latexNote1': ' '
+}
+
+
+
+saveName = 'massZ1_diffM4lErr_2e2mu'
+paraConfigs[saveName] = \
+{\
+'rootPath1': '/raid/raid5/dsperka/Run2/HZZ4l/SubmitArea_13TeV/Ana_ZZ4L_80X/',
+'rootfile1': 'Data_Run2016-03Feb2017_hzz4l_bestCandMela.root',
+'tree1': 'passedEvents',
+'binInfo_x': [100, 50, 110],
+'binInfo_y': [100, -0.1, 0.1],
+'vars1_x': ['massZ1'],
+'vars1_y': ['mass4lErr/mass4l-mass4lErrREFIT/mass4lREFIT'],
+'cuts1': ['mass4l > 105 && mass4l < 140 && finalState>2'],
+'weight1': ['1'],
+'xTitle': 'mz1',
+'yTitle': 'm4lErr/m4l-m4lErrREFIT/m4lREFIT',
+'savePath': savePath,
+'saveName': saveName, #
+'doLogZ': False,
+'latexNote1': ' '
+}
+
+
+saveName = 'massZ1_diffM4lErr_4mu'
+paraConfigs[saveName] = \
+{\
+'rootPath1': '/raid/raid5/dsperka/Run2/HZZ4l/SubmitArea_13TeV/Ana_ZZ4L_80X/',
+'rootfile1': 'Data_Run2016-03Feb2017_hzz4l_bestCandMela.root',
+'tree1': 'passedEvents',
+'binInfo_x': [100, 50, 110],
+'binInfo_y': [100, -0.1, 0.1],
+'vars1_x': ['massZ1'],
+'vars1_y': ['mass4lErr/mass4l-mass4lErrREFIT/mass4lREFIT'],
+'cuts1': ['mass4l > 105 && mass4l < 140 && finalState==1'],
+'weight1': ['1'],
+'xTitle': 'mz1',
+'yTitle': 'm4lErr/m4l-m4lErrREFIT/m4lREFIT',
+'savePath': savePath,
+'saveName': saveName, #
+'doLogZ': False,
+'latexNote1': ' '
+}
+
+
+saveName = 'diffPt_gen_reco_vs_genpT'
+paraConfigs[saveName] = \
+{\
+'rootPath1': '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/outputRoot/DY_2016MC_v3_20170312_afterApproval/',
+'rootfile1': 'DYJetsToLL_M-50_kalman_v4_m2mu.root',
+'tree1': 'passedEvents',
+'binInfo_x': [100, 0, 100],
+'binInfo_y': [10, -1, 1],
+'vars1_x': ['genLep_pt1','genLep_pt2'],
+'vars1_y': ['genLep_pt1-pT1','genLep_pt2-pT2'],
+'cuts1': ['genzm > 60 && genzm < 120',\
+          'genzm > 60 && genzm < 120'],
+'weight1': ['1','1'],
+'xTitle': 'pT_{gen}',
+'yTitle': 'pT_{gen}-pT_{reco}',
+'savePath': savePath,
+'saveName': saveName, #
+'doLogZ': False,
+'latexNote1': ' '
+}
+
 
