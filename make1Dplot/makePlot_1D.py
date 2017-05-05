@@ -46,7 +46,7 @@ latexNote2 = paraConfig['latexNote2']
 doFit = paraConfig['doFit']
 pdfName = paraConfig['pdfName']
 color1 = paraConfig['color1']
-doUnbinFit = paraConfig['doUnbin']
+#doUnbinFit = paraConfig['doUnbin']
 
 ####
 # configuration loaded, start to set pdf for fit
@@ -284,13 +284,13 @@ latex.SetTextAlign(11)
 
 latex.SetTextColor(1)
 #latex.DrawLatex(0.64, 0.85, '#sigma_{dCB}^{m_{4#mu}} = ' + sigmaReco + ' GeV')
-latex.DrawLatex(0.2, 0.85, 'mean_{dCB}^{H #rightarrow 4#mu} = ' + meanReco + ' GeV')
+latex.DrawLatex(0.2, 0.85, 'mean_{dCB}^{Z #rightarrow 4#mu} = ' + meanReco )
 
 #latex.DrawLatex(0.2, 0.85, 'H #rightarrow ZZ #rightarrow 4#mu')
 #latex.DrawLatex(0.2, 0.78, 'm_{H} = 125 GeV')
 #latex.DrawLatex(0.64, 0.78, '#sigma_{dCB}^{m\'_{4#mu}} = ' + sigmaRefit + ' GeV')
 latex.SetTextColor(TColor.GetColor(color1))
-latex.DrawLatex(0.2, 0.78, 'mean_{dCB}^{Z #rightarrow 2#mu} = ' + meanRefit + ' GeV')
+latex.DrawLatex(0.2, 0.78, 'mean_{dCB}^{Z #rightarrow 4#mu(ext)} = ' + meanRefit )
 
 latex.DrawLatex(0.45, 0.85, latexNote1)
 if len(latexNote2) > 0:

@@ -1,6 +1,6 @@
 paraConfigs = { }
 
-savePath = '/home/mhl/public_html/2017/20170427_checkZPeak/'
+savePath = '/home/mhl/public_html/2017/20170503_testUnbinFitCode/'
 
 saveName = 'GENMZ_2016MC_e_massZ'
 paraConfigs[saveName] = \
@@ -1373,5 +1373,25 @@ paraConfigs[saveName] = \
 'saveName': saveName, #
 'latexNote1': ' ',
 'pdfName': 'model'
+}
+
+
+saveName = 'test_pT1_residual'
+paraConfigs[saveName] = \
+{\
+'rootPath1': '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/liteUFHZZ4LAnalyzer/Ntuples/',
+'rootfile1': 'ggH125_2016MC_20170223.root',
+#'rootfile1': 'ggH125_2016MC.root',
+'tree1': 'passedEvents',
+'binInfo': [100, -0.15, 0.15],
+'vars1': ['(pTL1-pTGENL1)/pTGENL1'],
+'cuts1': ['passedFullSelection && finalState == 1 && mass4l > 105 && mass4l < 140'],
+'weight1': ['1'],
+'xTitle': '(pTL1-pTGENL1)/pTGENL1',
+'yTitle': '',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': ' ',
+'pdfName': 'doubleCB'
 }
 

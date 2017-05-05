@@ -1,6 +1,6 @@
 paraConfigs = { }
 
-savePath = '/home/mhl/public_html/2017/20170503_testUnbinFitCode/'
+savePath = '/home/mhl/public_html/2017/20170502_checkResiduals/Z4L_Z4Lext/'
 
 saveName = 'electronPtErr_DY_H_2016'
 paraConfigs[saveName] = \
@@ -808,5 +808,63 @@ for i in range(len(pts)-1):
                      ['genLep_pt2', 0, 100],\
                      ['genLep_eta1', 0, 2.5],\
                      ['genLep_eta2', 0, 2.5] ]
+        }
+
+
+
+
+saveName_0 = 'PtResidual_Z4L_Z4Lext_'
+etas = [0,2.4]#0.9,1.8,2.4]
+pts = [5,100]#20,40,50,60,100]
+#pts = [5,10,20,30,40,50,60,70,80,90,100]
+for i in range(len(pts)-1):
+    for j in range(len(etas)-1):
+        saveName = saveName_0 + 'pT_' + str(pts[i]) + '_' + str(pts[i+1]) + '_eta_' + str(etas[j]) + '_' + str(etas[j+1])
+        paraConfigs[saveName] = \
+        {\
+        'rootPath1': '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/liteUFHZZ4LAnalyzer/Ntuples/',
+        'rootPath2': '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/liteUFHZZ4LAnalyzer/Ntuples/',
+        'rootfile1': 'ZZTo4L_13TeV_powheg_pythia8_RunIISummer16MiniAODv2.root',
+        'rootfile2': 'ZZTo4L_13TeV_powheg_pythia8_ext1_RunIISummer16MiniAODv2.root',
+        'tree1': 'passedEvents',
+        'tree2': 'passedEvents',
+        'binInfo': [100, -0.1,0.1],
+        'vars1': ['(pTL1-pTGENL1)/pTGENL1',\
+                  '(pTL2-pTGENL2)/pTGENL2',\
+                  '(pTL3-pTGENL3)/pTGENL3',\
+                  '(pTL4-pTGENL4)/pTGENL4'],
+        'vars2': ['(pTL1-pTGENL1)/pTGENL1',\
+                  '(pTL2-pTGENL2)/pTGENL2',\
+                  '(pTL3-pTGENL3)/pTGENL3',\
+                  '(pTL4-pTGENL4)/pTGENL4'],
+        'cuts1': ['passedFullSelection && mass4l > 105 && mass4l < 140 && finalState == 1 && pTGENL1 > ' + str(pts[i]) + ' && pTGENL1 < ' + str(pts[i+1])\
+                   + ' && abs(etaL1) > ' + str(etas[j]) + ' && abs(etaL1) < ' + str(etas[j+1]),\
+                  'passedFullSelection && mass4l > 105 && mass4l < 140 && finalState == 1 && pTGENL2 > ' + str(pts[i]) + ' && pTGENL2 < ' + str(pts[i+1])\
+                   + ' && abs(etaL2) > ' + str(etas[j]) + ' && abs(etaL2) < ' + str(etas[j+1]),\
+                  'passedFullSelection && mass4l > 105 && mass4l < 140 && finalState == 1 && pTGENL3 > ' + str(pts[i]) + ' && pTGENL3 < ' + str(pts[i+1])\
+                   + ' && abs(etaL3) > ' + str(etas[j]) + ' && abs(etaL3) < ' + str(etas[j+1]),\
+                  'passedFullSelection && mass4l > 105 && mass4l < 140 && finalState == 1 && pTGENL4 > ' + str(pts[i]) + ' && pTGENL4 < ' + str(pts[i+1])\
+                   + ' && abs(etaL4) > ' + str(etas[j]) + ' && abs(etaL4) < ' + str(etas[j+1])],
+        'cuts2': ['passedFullSelection && mass4l > 70 && mass4l < 105 && finalState == 1 && pTGENL1 > ' + str(pts[i]) + ' && pTGENL1 < ' + str(pts[i+1])\
+                   + ' && abs(etaL1) > ' + str(etas[j]) + ' && abs(etaL1) < ' + str(etas[j+1]),\
+                  'passedFullSelection && mass4l > 70 && mass4l < 105 && finalState == 1 && pTGENL2 > ' + str(pts[i]) + ' && pTGENL2 < ' + str(pts[i+1])\
+                   + ' && abs(etaL2) > ' + str(etas[j]) + ' && abs(etaL2) < ' + str(etas[j+1]),\
+                  'passedFullSelection && mass4l > 70 && mass4l < 105 && finalState == 1 && pTGENL3 > ' + str(pts[i]) + ' && pTGENL3 < ' + str(pts[i+1])\
+                   + ' && abs(etaL3) > ' + str(etas[j]) + ' && abs(etaL3) < ' + str(etas[j+1]),\
+                  'passedFullSelection && mass4l > 70 && mass4l < 105 && finalState == 1 && pTGENL4 > ' + str(pts[i]) + ' && pTGENL4 < ' + str(pts[i+1])\
+                   + ' && abs(etaL4) > ' + str(etas[j]) + ' && abs(etaL4) < ' + str(etas[j+1])],
+        'weight1': ['1','1','1','1'],
+        'weight2': ['1','1','1','1'],
+        'xTitle': '(pT_{Reco}-pT_{Gen})/pT_{Gen}',
+        'yTitle': '',
+        'legend1': 'ZZ4L sample, 70 < m4l < 105',
+        'legend2': 'ZZ4L sample(ext), 70 < m4l < 105',
+        'savePath': savePath,
+        'saveName': saveName, #
+        'latexNote1': '', #
+        'latexNote2': '',
+        'doFit': True,
+        'pdfName': 'doubleCB',
+        'color1' : '#1427D1'
         }
 

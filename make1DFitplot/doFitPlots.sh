@@ -83,4 +83,6 @@ cp  paraConfigurations_doFit.py paraConfigurations.py
 #python makePlot_1D_fit.py -t "GENZM_2_ZZSample_tchan"
 #python makePlot_1D_fit.py -t "massZ_ZZSample"
 
-python makePlot_1D_fit.py -t "GENZM_ZZSample"
+#python makePlot_1D_fit.py -t "GENZM_ZZSample"
+
+python makePlot_1D_fit.py -t "test_pT1_residual"

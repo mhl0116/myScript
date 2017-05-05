@@ -101,12 +101,12 @@ w.factory('BreitWigner::bw(x[' + str(xmin) + ',' + str(xmax) + '],meanBW[91.2, 8
 #                              alphaDCB[1.237], nDCB[2.482], alpha2[2.363], n2[1.873])')
 
 w.factory('DoubleCB::doubleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
-                              meanDCB[0,-1,1], sigmaDCB[2, 0, 5], \
+                              meanDCB[0,-1,1], sigmaDCB[0.01, 0, 5], \
                               alphaDCB[1,0,10], nDCB[1,0,10], alpha2[1,0,10], n2[1,0,50])')
 
 
 w.factory('CBShape::singleCB(x, \
-                             meanCB[0,-1,1], sigmaCB[1.1,0.1,10], alphaCB[1,0,10], nCB[1,0,50])')
+                             meanCB[0,-0.01,0.01], sigmaCB[0.01,0,10], alphaCB[1,0,10], nCB[1,0,50])')
 #                             meanCB[85,80,95], sigmaCB[5,0,10], alphaCB[1,0,10], nCB[1,0,50])')
 
 w.factory('Polynomial::poly3(x,{a0[1,-100,100],a1[10,-100,100],a2[-100,-1000,1000],a3[-10, -10000,10000]})')
