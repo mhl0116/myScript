@@ -3,6 +3,10 @@ from tdrStyle import *
 setTDRStyle()
 ROOT.gSystem.Load('libHiggsAnalysisCombinedLimit.so')
 import sys
+import time
+import datetime
+from subprocess import call
+import os.path
 
 class MakeFitPlot():
 
@@ -28,6 +32,14 @@ class MakeFitPlot():
           self.yTitle = config["yTitle"]
           self.savepath = config["savepath"]
           self.savename = config["savename"]
+
+          # save input config
+          with open(self.savepath+self.savename+".txt", "a+") as myfile:
+               myfile.write(datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S') + " EDT \n")
+               myfile.write("inputfile: " + self.inputfilepath + self.inputfilename + "\n")
+               myfile.write("cut: " + self.cut + "\n")
+               myfile.write("plotVariable: " + self.plotVarFormula + "\n")
+          myfile.close()
 
           # initialize a workspace
           self.var_x = ROOT.RooRealVar("x", "", self.x_low, self.x_high)
@@ -60,8 +72,8 @@ class MakeFitPlot():
       def MakePlot(self): 
 
           ### parepare frame 
-          makeplotClass.var_x.setBins(self.x_bins)
-          frame = makeplotClass.var_x.frame()
+          self.var_x.setBins(self.x_bins)
+          frame = self.var_x.frame()
 
           self.dataset.plotOn(frame, ROOT.RooFit.MarkerStyle(20), ROOT.RooFit.MarkerColor(1))
           self.w.pdf(self.pdfname).plotOn(frame, ROOT.RooFit.LineWidth(2), ROOT.RooFit.LineColor(4))
@@ -74,7 +86,7 @@ class MakeFitPlot():
           c = ROOT.TCanvas("c","",800,800)
           c.SetLeftMargin(0.15) 
           if self.doLogy: c.SetLogy()
-          dummy = ROOT.TH1D("dummy","dummy",1,config["x_low"],config["x_high"])
+          dummy = ROOT.TH1D("dummy","dummy",1,self.x_low,self.x_high)
           dummy.SetMinimum(int(self.doLogy) )
           dummy.SetMaximum(frame.GetMaximum()*2)
           dummy.SetLineColor(0)
@@ -82,7 +94,7 @@ class MakeFitPlot():
           dummy.SetLineWidth(0)
           dummy.SetMarkerSize(0)
           dummy.GetYaxis().SetTitle(self.yTitle)
-          dummy.GetYaxis().SetTitleOffset(1.4)
+          dummy.GetYaxis().SetTitleOffset(1.5)
           dummy.GetXaxis().SetTitle(self.xTitle)
           dummy.Draw()
 
@@ -102,7 +114,7 @@ class MakeFitPlot():
       def MakePdfFactory(self):
 
           self.w.factory('DoubleCB::doubleCB_1(x, \
-                          meanDCB[-0.000387,-0.001,0.001], sigmaDCB[0.0146,0.001,0.1], \
+                          meanDCB[-0.000387,-0.1,0.1], sigmaDCB[0.0146,0.001,1], \
                           alphaDCB[1,0,5], nDCB[5,0,20], alpha2[1,0,5], n2[5,0,100])')
 
           self.w.factory('DoubleCB::doubleCB_2(x, \
@@ -115,39 +127,3 @@ class MakeFitPlot():
 
           self.w.factory('SUM:model(fsig[0.9,0.7,1]*doubleCB_1, gauss_1)')
 
-config = \
-{\
-"unbinFit":True,\
-"inputfilepath":"/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/liteUFHZZ4LAnalyzer/Ntuples/",\
-"inputfilename":"ggH125_2016MC_20170223.root",\
-"treename":"passedEvents",\
-"cut":"passedFullSelection > 0.5 && mass4l > 105 && mass4l < 140 && finalState == 1 && \
-       pTGENL4 > 5 && pTGENL4 < 20 && abs(etaL4) > 0 && abs(etaL4) < 0.9 &&\
-       (pTL4-pTGENL4)/pTGENL4 > -0.1 && (pTL4-pTGENL4)/pTGENL4 < 0.1",\
-"x_low":-0.1,\
-"x_high":0.1,\
-"x_bins": 100,\
-"pdfname": "doubleCB_1",\
-# for bin fit
-"roorealvars":[ROOT.RooRealVar("passedFullSelection","",0,2),\
-               ROOT.RooRealVar("mass4l","",105,140),\
-               ROOT.RooRealVar("finalState","",0,5),\
-               ROOT.RooRealVar("pTL4","",0,100),\
-               ROOT.RooRealVar("pTGENL4","",0,100),\
-               ROOT.RooRealVar("etaL4","",-2.5,2.5)],\
-"plotVarFormula": "(pTL4-pTGENL4)/pTGENL4",\
-# plot set up
-"doLogy":False,\
-"xTitle": "(pT_{reco}-pT_{gen})/pT_{gen}",\
-"yTitle": "Events/" + str((0.1-(-0.1))/100),\
-"savepath": "/home/mhl/public_html/2017/20170503_testUnbinFitCode/",\
-"savename": "test"
-}
-config["plotArgList"] = ROOT.RooArgList(config["roorealvars"][3],config["roorealvars"][4])
-### add cut and yTitle in the end
-
-makeplotClass = MakeFitPlot(config)
-makeplotClass.MakePdfFactory()
-makeplotClass.MakeDataset()
-makeplotClass.fitResult = makeplotClass.w.pdf(config["pdfname"]).fitTo(makeplotClass.dataset, ROOT.RooFit.Save(True))
-makeplotClass.MakePlot()
