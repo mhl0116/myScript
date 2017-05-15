@@ -8,7 +8,8 @@ import sys
 def MakeGraph(txtfile, cut, xIndex1, xIndex2, yIndex, yErrIndex):
 
     data = [line.strip().split() for line in open(txtfile, 'r') if cut in line]
-
+    print txtfile
+    print data
     x,y,xErr,yErr = array('f'),array('f'),array('f'),array('f')
     for i in range(len(data)):
         x.append( (float(data[i][xIndex1]) + float(data[i][xIndex2]) )/2 )
@@ -56,19 +57,32 @@ def PlotGraph(grs,legends,markerstyle,markercolor,drawOption,xMin,xMax,xTitle,yM
 
 
 txtpath = "/raid/raid9/mhl/HZZ4L_Run2_post2017Moriond/txtfiles/"
-txtfiles = ["Z4L_muPtResidual.txt","H4L_muPtResidual.txt"]
+#txtfiles = ["Z4L_muPtResidual.txt","H4L_muPtResidual.txt"]
+#txtfiles = ["Z4L_muPtResidual_eta_0p9_1p4.txt","ZZ4L_muPtResidual_eta_0p9_1p4.txt"]
+txtfiles = ["Z4L_muPtResidual_eta_1p4_2p4.txt","ZZ4L_muPtResidual_eta_1p4_2p4.txt"]
+#txtfiles = ["H4L_muPtResidual_ggH.txt","H4L_muPtResidual_VBF.txt"]
 drawOption = "ep"
-savepath = "/home/mhl/public_html/2017/20170505_checkResiduals/"
-savename = "pTResiduals_H4L_Z4L"
+savepath = "/home/mhl/public_html/2017/20170511_checkMuPtResidual_endcap/"
+savename = "pTResiduals_Z4L_ZZ4L_"
+#savename = "n2_Z4L_"
 
 xMin = 0
 xMax = 100
 yMin = -0.004
 yMax = 0.004
+#yMin = 0
+#yMax = 15
 xTitle = "p_{T}^{gen}"
+#xTitle = "#eta"
 yTitle = "(pT_{Reco}-pT_{Gen})/pT_{Gen}"
+#yTitle = "fitted n2"
 
-cuts = [" 0.0 0.9 ", " 0.9 1.8 ", " 1.8 2.4 "]
+#cuts = [" 0.9 1.4 "]
+cuts = [" 1.4 2.4 "]
+#cuts = [" 0.0 0.9 ", " 0.9 2.4 "]
+#cuts = [" 0.0 0.9 ", " 0.9 1.8 ", " 1.8 2.4 "]
+#cuts = ["5.0 10.0"]
+#cuts = [" 0.0 0.2 "]
 grs = []
 legends = []
 markerstyle = []
@@ -78,18 +92,35 @@ for i in range(len(cuts)):
     for j in range(len(txtfiles)):
         cut = cuts[i]
         txtfile = txtpath+txtfiles[j]
+#        grs.append(MakeGraph(txtfile, cut, 0, 1, 14, 15))
         grs.append(MakeGraph(txtfile, cut, 0, 1, 4, 5))
-        eta1 = (cut.split())[0]
-        eta2 = (cut.split())[1]
-        if "Z4L" in txtfiles[j]:
-           legends.append("Z #rightarrow 4L ("+eta1+" < |#eta| < "+eta2+")")
+        cut1 = (cut.split())[0]
+        cut2 = (cut.split())[1]
+        if txtfiles[j].startswith("Z4L"):
+#        if "Z4L" in txtfiles[j]:
+#        if "VBF" in txtfiles[j]:
+#           legends.append("VBF ("+cut1+" < |#eta| < "+cut2+")")
+#           legends.append("Z #rightarrow 4L ("+cut1+" < |#eta| < "+cut2+")")
+           legends.append("Z #rightarrow 4L ("+cut1+" < pT < "+cut2+")")
            markercolor.append(1)
            markerstyle.append(20)
+
         if "H4L" in txtfiles[j]:
-           legends.append("H #rightarrow 4L ("+eta1+" < |#eta| < "+eta2+")")
+#        if "ggH" in txtfiles[j]:
+#           legends.append("ggH ("+cut1+" < |#eta| < "+cut2+")")
+           legends.append("H #rightarrow 4L ("+cut1+" < |#eta| < "+cut2+")")
+#           legends.append("H #rightarrow 4L ("+cut1+" < pT < "+cut2+")")
            markercolor.append(2)
            markerstyle.append(24)
-        savename_tag = savename + "eta_" + eta1 + "_" + eta2
+
+        if "ZZ4L" in txtfiles[j]:
+           legends.append("ZZ #rightarrow 4L ("+cut1+" < |#eta| < "+cut2+")")
+           markercolor.append(2)
+           markerstyle.append(24)
+
+#        savename_tag = savename + "eta_" + cut1 + "_" + cut2
+        savename_tag = savename + "pT_" + cut1 + "_" + cut2
+    print legends
     PlotGraph(grs,legends,markerstyle,markercolor,drawOption,xMin,xMax,xTitle,yMin,yMax,yTitle,savepath,savename_tag)
     del grs[:]
     del legends[:]

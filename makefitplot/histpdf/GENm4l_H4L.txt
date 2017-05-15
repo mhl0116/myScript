@@ -1,0 +1,24 @@
+2017-05-11 11:19:15 EDT 
+inputfile: /raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/liteUFHZZ4LAnalyzer/Ntuples/ggH125_2016MC_20170223.root
+cut: passedFullSelection > 0.5 && GENmass4l > 105 && GENmass4l < 140 && finalState == 1 
+plotVariable: GENmass4l
+2017-05-11 11:19:40 EDT 
+inputfile: /raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/liteUFHZZ4LAnalyzer/Ntuples/ggH125_2016MC_20170223.root
+cut: passedFullSelection > 0.5 && GENmass4l > 105 && GENmass4l < 140 && finalState == 1 
+plotVariable: GENmass4l
+2017-05-11 11:20:04 EDT 
+inputfile: /raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/liteUFHZZ4LAnalyzer/Ntuples/ggH125_2016MC_20170223.root
+cut: passedFullSelection > 0.5 && GENmass4l > 105 && GENmass4l < 140 && finalState == 1 
+plotVariable: GENmass4l
+2017-05-11 11:20:25 EDT 
+inputfile: /raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/liteUFHZZ4LAnalyzer/Ntuples/ggH125_2016MC_20170223.root
+cut: passedFullSelection > 0.5 && GENmass4l > 105 && GENmass4l < 140 && finalState == 1 
+plotVariable: GENmass4l
+2017-05-11 11:22:24 EDT 
+inputfile: /raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/liteUFHZZ4LAnalyzer/Ntuples/ggH125_2016MC_20170223.root
+cut: passedFullSelection > 0.5 && GENmass4l > 105 && GENmass4l < 140 && finalState == 1 
+plotVariable: GENmass4l
+2017-05-11 11:29:05 EDT 
+inputfile: /raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/liteUFHZZ4LAnalyzer/Ntuples/ggH125_2016MC_20170223.root
+cut: passedFullSelection > 0.5 && GENmass4l > 105 && GENmass4l < 140 && finalState == 1 
+plotVariable: GENmass4l

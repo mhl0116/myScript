@@ -8,51 +8,31 @@ import datetime
 from subprocess import call
 import os.path
 
-def WriteLog(saveInfo, log, overwrite=True):
-
-    if (overwrite):
-       with open(saveInfo+".txt", "w+") as myfile:
-            myfile.write(datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S') + " EDT \n")
-            myfile.write(log + "\n")
-       myfile.close()
-    else:
-       with open(saveInfo+".txt", "a+") as myfile:
-            myfile.write(datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S') + " EDT \n")
-            myfile.write(log + "\n")
-       myfile.close()
-
-
 class MakeFitPlot():
 
       def __init__(self, config):
 
           # load configurations
-          '''
           self.doUnbin = config["unbinFit"]
           self.inputfilepath = config["inputfilepath"]
           self.inputfilename = config["inputfilename"]
           self.treename = config["treename"]
           self.cut = config["cut"]
-          '''
-
-          self.config = config
-
-          self.x_low = self.config["x_low"]
-          self.x_high = self.config["x_high"]
-          self.x_bins = self.config["x_bins"]
-          #self.pdfname = config["pdfname"]
+          self.x_low = config["x_low"]
+          self.x_high = config["x_high"]
+          self.x_bins = config["x_bins"]
+          self.pdfname = config["pdfname"]
           # for bin fit
-          '''
           self.roorealvars = config["roorealvars"]     
           self.plotVarFormula = config["plotVarFormula"]
           self.plotArgList = config["plotArgList"]
-          
           # set up plot
           self.doLogy = config["doLogy"]
           self.xTitle = config["xTitle"]
           self.yTitle = config["yTitle"]
           self.savepath = config["savepath"]
           self.savename = config["savename"]
+
           # save input config
           with open(self.savepath+self.savename+".txt", "a+") as myfile:
                myfile.write(datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S') + " EDT \n")
@@ -60,40 +40,23 @@ class MakeFitPlot():
                myfile.write("cut: " + self.cut + "\n")
                myfile.write("plotVariable: " + self.plotVarFormula + "\n")
           myfile.close()
-          '''
 
           # initialize a workspace
           self.var_x = ROOT.RooRealVar("x", "", self.x_low, self.x_high)
           self.w = ROOT.RooWorkspace()
           getattr(self.w, 'import')(self.var_x)
 
-          '''
           # assemble rooargset for roodataset
           self.rooargset = ROOT.RooArgSet()
           for roorealvar in self.roorealvars:
               self.rooargset.add(roorealvar)
-          '''
- 
+
           self.dataset = ROOT.RooDataSet()
           self.fitResult = ROOT.RooFitResult()
     
           self.chi2 = -1
 
       def MakeDataset(self):
-
-          self.doUnbin = self.config["unbinFit"]
-          self.inputfilepath = self.config["inputfilepath"]
-          self.inputfilename = self.config["inputfilename"]
-          self.treename = self.config["treename"]
-          self.cut = self.config["cut"]
-
-          self.roorealvars = self.config["roorealvars"]
-          self.plotVarFormula = self.config["plotVarFormula"]
-          self.plotArgList = self.config["plotArgList"]
-
-          self.rooargset = ROOT.RooArgSet()
-          for roorealvar in self.roorealvars:
-              self.rooargset.add(roorealvar)
 
           file_ = ROOT.TFile(self.inputfilepath + self.inputfilename)
           tree_ = file_.Get(self.treename)
@@ -113,17 +76,7 @@ class MakeFitPlot():
           dataset.setRange(self.x_low,self.x_high)
 
 
-      def MakePlot(self): 
-
-          self.var = self.config["var"]
-          pdf = self.config["pdf"]
-          dataset = self.config["dataset"]
-
-          self.doLogy = self.config["doLogy"]
-          self.xTitle = self.config["xTitle"]
-          self.yTitle = self.config["yTitle"]
-          self.savepath = self.config["savepath"]
-          self.savename = self.config["savename"]
+      def MakePlot(self, var, pdf, dataset): 
 
           ### parepare frame 
           var.setBins(self.x_bins)
@@ -167,8 +120,24 @@ class MakeFitPlot():
 
           c.SaveAs(self.savepath + self.savename + ".png")
           c.SaveAs(self.savepath + self.savename + ".pdf")
-
                 
+      '''
+      def MakeKernelModel(self):
+
+          for i in range(self.dataset.sumEntries()):
+                massReco = RooRealVar('massReco','massReco', m4l_low, m4l_high)
+                massReco = dataset_sig.get(i).find(masses[channel])
+                massTrue = RooRealVar('massTrue','massTrue', m4l_low, m4l_high)
+                massTrue = dataset_sig.get(i).find('GENMH')
+                weightdataset = RooRealVar('weight', 'weight', 0, 10)
+                weightdataset = dataset_weight.get(i).find('dataMCWeight')
+                wt =  weightdataset.getVal()
+                weightset.setVal(wt)
+                massPrime[channel].setVal(massReco.getVal()-massTrue.getVal()+higgsMass)
+                dataset_revised.add(weightArgSet, wt)
+
+      '''
+
       def MakeGenShape(self):
 
           file_ = ROOT.TFile(self.inputfilepath + self.inputfilename)
@@ -185,24 +154,13 @@ class MakeFitPlot():
 
           w_histpdf.writeToFile(self.savepath + self.savename + ".root")
           
+
       def LoadGenShape(self, histpdfname):
 
           histpdffile = ROOT.TFile("histpdf/" + histpdfname + ".root")
           histpdfws_ = histpdffile.Get("w_histPdf")
           histpdf_ = histpdfws_.pdf("genshape")
           getattr(self.w, 'import')(histpdf_)
-
-
-      
-      def SaveConfig(self):
-
-         # save input config
-          with open(self.savepath+self.savename+".txt", "w+") as myfile:
-               myfile.write(datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S') + " EDT \n")
-               myfile.write("inputfile: " + self.inputfilepath + self.inputfilename + "\n")
-               myfile.write("cut: " + self.cut + "\n")
-               myfile.write("plotVariable: " + self.plotVarFormula + "\n")
-          myfile.close()
 
       def MakePdfFactory(self):
 
