@@ -8,7 +8,7 @@ import datetime
 from subprocess import call
 import os.path
 
-def WriteLog(saveInfo, log, overwrite=True):
+def WriteLog(saveInfo, log, overwrite):
 
     if (overwrite):
        with open(saveInfo+".txt", "w+") as myfile:

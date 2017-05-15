@@ -87,73 +87,16 @@ makeplotClass = plt.MakeFitPlot(config)
 makeplotClass.MakePdfFactory()
 makeplotClass.MakeDataset()
 
-logInfo = config["savepath"] + config["savename"] + ".txt"
-plt.WriteLog(logInfo, "inputfile: " + config["inputfilepath"] + config["inputfilename"] + "\n")
+logInfo = config["savepath"] + config["savename"]
+plt.WriteLog(logInfo, "inputfile: " + config["inputfilepath"] + config["inputfilename"] + "\n", True)
 
 pdf = makeplotClass.w.pdf(config["pdfname"])
 dataset = makeplotClass.dataset
 
-w_out = ROOT.RooWorkspace("w_out")
-getattr(w_out, 'import')(dataset)
-w_out.writeToFile(config["savepath"] + config["savename"] + '.root')
-
-
-'''
-#lep3
-config["cut"] = config["cut"].replace("L4","L3")
-config["plotVarFormula"] = config["plotVarFormula"].replace("L4","L3")
-config["roorealvars"][0] = ROOT.RooRealVar("pTL3","",0,100)
-config["roorealvars"][1] = ROOT.RooRealVar("pTGENL3","",0,100)
-config["roorealvars"][-2] = ROOT.RooRealVar("etaL3","",-2.5,2.5)
-config["plotArgList"] = ROOT.RooArgList(config["roorealvars"][0],config["roorealvars"][1])
-makeplotClass2 = plt.MakeFitPlot(config)
-makeplotClass2.MakeDataset()
-
-makeplotClass2.dataset.Print("v")
-makeplotClass2.dataset.get(40925).Print("v")
-
-dataset.append(makeplotClass2.dataset)
-dataset.Print("v")
-dataset.get(40925).Print("v")
-dataset.get(81913).Print("v")
-sys.exit()
-
-#lep2
-config["cut"] = config["cut"].replace("L3","L2")
-config["plotVarFormula"] = config["plotVarFormula"].replace("L3","L2")
-config["roorealvars"][0] = ROOT.RooRealVar("pTL2","",0,100)
-config["roorealvars"][1] = ROOT.RooRealVar("pTGENL2","",0,100)
-config["roorealvars"][-2] = ROOT.RooRealVar("etaL2","",-2.5,2.5)
-config["plotArgList"] = ROOT.RooArgList(config["roorealvars"][0],config["roorealvars"][1])
-makeplotClass3 = plt.MakeFitPlot(config)
-makeplotClass3.MakeDataset()
-dataset.append(makeplotClass3.dataset)
-
-dataset.Print("v")
-
-#lep4
-config["cut"] = config["cut"].replace("L2","L1")
-config["plotVarFormula"] = config["plotVarFormula"].replace("L2","L1")
-config["roorealvars"][0] = ROOT.RooRealVar("pTL1","",0,100)
-config["roorealvars"][1] = ROOT.RooRealVar("pTGENL1","",0,100)
-config["roorealvars"][-2] = ROOT.RooRealVar("etaL1","",-2.5,2.5)
-config["plotArgList"] = ROOT.RooArgList(config["roorealvars"][0],config["roorealvars"][1])
-makeplotClass4 = plt.MakeFitPlot(config)
-makeplotClass4.MakeDataset()
-dataset.append(makeplotClass4.dataset)
-
 dataset.Print("v")
 
 w_out = ROOT.RooWorkspace("w_out")
 getattr(w_out, 'import')(dataset)
 w_out.writeToFile(config["savepath"] + config["savename"] + '.root')
-'''
-#makeplotClass.fitResult = pdf.fitTo(dataset, ROOT.RooFit.Save(True))
-#makeplotClass.MakePlot()
 
-#with open(summaryTxt, "a+") as myfile:
-#     myfile.write(' '.join([str(pt1),str(pt2),str(eta1),str(eta2), \
-#     str(makeplotClass.w.var("meanDCB").getVal() ), \
-#     str(makeplotClass.w.var("meanDCB").getError() ) ] ) + '\n' )
-#myfile.close()
 
