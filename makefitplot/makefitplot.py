@@ -8,7 +8,7 @@ import datetime
 from subprocess import call
 import os.path
 
-def WriteLog(saveInfo, log, overwrite):
+def WriteLog(saveInfo, log, overwrite=True):
 
     if (overwrite):
        with open(saveInfo+".txt", "w+") as myfile:
@@ -115,7 +115,7 @@ class MakeFitPlot():
 
       def MakePlot(self): 
 
-          self.var = self.config["var"]
+          self.var = self.w.var("x")#self.config["var"]
           pdf = self.config["pdf"]
           dataset = self.config["dataset"]
 
@@ -126,8 +126,8 @@ class MakeFitPlot():
           self.savename = self.config["savename"]
 
           ### parepare frame 
-          var.setBins(self.x_bins)
-          frame = var.frame()
+          self.var.setBins(self.x_bins)
+          frame = self.var.frame()
 
           dataset.plotOn(frame, ROOT.RooFit.MarkerStyle(20), ROOT.RooFit.MarkerColor(1))
           pdf.plotOn(frame, ROOT.RooFit.LineWidth(2), ROOT.RooFit.LineColor(4))

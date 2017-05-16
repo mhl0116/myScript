@@ -46,12 +46,12 @@ config = \
 "unbinFit":True,\
 "inputfilepath":"/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/liteUFHZZ4LAnalyzer/Ntuples/",\
 #        "inputfilepath":"/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/outputRoot/DY_2016MC_v3_20170312_afterApproval/",\
-        "inputfilename":"ggH125_2016MC_20170223.root",\
+#        "inputfilename":"ggH125_2016MC_20170223.root",\
 #        "inputfilename":"VBF_HToZZTo4L_M125_13TeV_powheg2_JHUgenV6_pythia8_RunIISummer16MiniAODv2.root",\
-#"inputfilename":"ZZTo4L_13TeV_powheg_pythia8_ext1_RunIISummer16MiniAODv2.root",\
+"inputfilename":"ZZTo4L_13TeV_powheg_pythia8_ext1_RunIISummer16MiniAODv2.root",\
 #        "inputfilename":"DYJetsToLL_M-50_kalman_v4_m2mu.root",\
 "treename":"passedEvents",\
-"cut":"passedFullSelection > 0.5 && mass4l > 105 && mass4l < 140 && finalState == 1 &&  \
+"cut":"passedFullSelection > 0.5 && massZ1 > 80 && massZ1 < 100 && massZ2 > 80 && massZ2 < 100 && finalState == 1 && \
        pTGENL" + lepIndex + " > " + str(pt1)  + " && pTGENL" + lepIndex + " < " + str(pt2) + " && \
        abs(etaL" + lepIndex + ") > " + str(eta1) + " && abs(etaL" + lepIndex + ") < " + str(eta2),\
 "x_low":-0.2,\
@@ -62,7 +62,8 @@ config = \
 "roorealvars":[ROOT.RooRealVar("pTL" + lepIndex,"",0,100),\
                ROOT.RooRealVar("pTGENL" + lepIndex,"",0,100),\
                ROOT.RooRealVar("passedFullSelection","",0,2),\
-               ROOT.RooRealVar("mass4l","",105,140),\
+               ROOT.RooRealVar("massZ1","",80,100),\
+               ROOT.RooRealVar("massZ2","",80,100),\
                ROOT.RooRealVar("finalState","",0,5),\
                ROOT.RooRealVar("etaL" + lepIndex,"",-2.5,2.5),\
                ROOT.RooRealVar("nFSRPhotons","",0,10)],\
