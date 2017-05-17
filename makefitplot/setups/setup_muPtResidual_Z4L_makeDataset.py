@@ -51,25 +51,27 @@ config = \
 "inputfilename":"ZZTo4L_13TeV_powheg_pythia8_ext1_RunIISummer16MiniAODv2.root",\
 #        "inputfilename":"DYJetsToLL_M-50_kalman_v4_m2mu.root",\
 "treename":"passedEvents",\
-"cut":"passedFullSelection > 0.5 && mass4l > 70 && mass4l < 105 && finalState == 1 &&  \
+"cut":"passedFullSelection > 0.5 && mass4l > 70 && mass4l < 105 && finalState == 1 && idL" + lepIndex + " == -13 && \
        pTGENL" + lepIndex + " > " + str(pt1)  + " && pTGENL" + lepIndex + " < " + str(pt2) + " && \
        abs(etaL" + lepIndex + ") > " + str(eta1) + " && abs(etaL" + lepIndex + ") < " + str(eta2),\
-"x_low":-0.2,\
-"x_high":0.2,\
+"x_low":-5,\
+"x_high":5,\
 "x_bins": 100,\
 "pdfname": "doubleCB_1",\
 # for bin fit
 "roorealvars":[ROOT.RooRealVar("pTL" + lepIndex,"",0,100),\
                ROOT.RooRealVar("pTGENL" + lepIndex,"",0,100),\
+               ROOT.RooRealVar("pTErrL" + lepIndex,"",0,10),\
+               ROOT.RooRealVar("idL" + lepIndex,"",-20,20),\
                ROOT.RooRealVar("passedFullSelection","",0,2),\
                ROOT.RooRealVar("mass4l","",70,105),\
                ROOT.RooRealVar("finalState","",0,5),\
                ROOT.RooRealVar("etaL" + lepIndex,"",-2.5,2.5),\
                ROOT.RooRealVar("nFSRPhotons","",0,10)],\
-"plotVarFormula": "(pTL" + lepIndex + "-pTGENL" + lepIndex + ")/pTGENL" + lepIndex,\
+"plotVarFormula": "(1/pTL" + lepIndex + "- 1/pTGENL" + lepIndex + ")/(1/pTGENL" + lepIndex+")",\
 # plot set up
 "doLogy":False,\
-"xTitle": "(pT_{reco}-pT_{gen})/pT_{gen}",\
+"xTitle": "",\
 "yTitle": "",\
 "savepath": datasetpath,\
 "savename": datasetname

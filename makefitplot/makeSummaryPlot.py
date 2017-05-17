@@ -23,6 +23,7 @@ def PlotGraph(grs,legends,markerstyle,markercolor,drawOption,xMin,xMax,xTitle,yM
 
     c = TCanvas("c","",800,800)
 #    c.SetLogy()
+    c.SetGridy()
     c.SetLeftMargin(0.20)
     dummy = TH1D("dummy","dummy",1,xMin,xMax)
     dummy.SetMinimum(yMin)
@@ -33,6 +34,7 @@ def PlotGraph(grs,legends,markerstyle,markercolor,drawOption,xMin,xMax,xTitle,yM
     dummy.SetMarkerSize(0)
     dummy.GetXaxis().SetTitle(xTitle)
     dummy.GetYaxis().SetTitleOffset(2)
+    dummy.GetXaxis().SetNdivisions(505)
     dummy.GetYaxis().SetTitle(yTitle)
     dummy.Draw()
 
@@ -57,13 +59,12 @@ def PlotGraph(grs,legends,markerstyle,markercolor,drawOption,xMin,xMax,xTitle,yM
 
 
 txtpath = "/raid/raid9/mhl/HZZ4L_Run2_post2017Moriond/txtfiles/"
-#txtfiles = ["Z4L_muPtResidual.txt","H4L_muPtResidual.txt"]
-#txtfiles = ["Z4L_muPtResidual_eta_0p9_1p4.txt","ZZ4L_muPtResidual_eta_0p9_1p4.txt"]
-txtfiles = ["Z4L_muPtResidual_eta_fullRange.txt","ZZ4L_muPtResidual_eta_fullRange.txt"]
-#txtfiles = ["H4L_muPtResidual_ggH.txt","H4L_muPtResidual_VBF.txt"]
+#txtfiles = ["Z4LmuPlusPtResidual_fullRange.txt","H4LmuPlusPtResidual_fullRange.txt"]
+txtfiles = ["Z4LmuMinusPtResidual_fullRange.txt","H4LmuMinusPtResidual_fullRange.txt"]
 drawOption = "ep"
-savepath = "/home/mhl/public_html/2017/20170516_residual_1overpT/"
-savename = "pTResiduals_Z4L_ZZ4L_"
+#savepath = "/home/mhl/public_html/2017/20170518_residual_1overpT_muPlus/"
+savepath = "/home/mhl/public_html/2017/20170518_residual_1overpT_muMinus/"
+savename = "pTResiduals_Z4L_H4L_"
 #savename = "n2_Z4L_"
 
 xMin = 0
@@ -74,13 +75,15 @@ yMax = 0.004
 #yMax = 15
 xTitle = "1/p_{T}^{gen}"
 #xTitle = "#eta"
-yTitle = "(pT_{Reco}-pT_{Gen})/pT_{Gen}"
+yTitle = "(1/pT_{Reco}-1/pT_{Gen})/(1/pT_{Gen})"
 #yTitle = "fitted n2"
 
 #cuts = [" 0.9 1.4 "]
 #cuts = [" 1.4 2.4 "]
-#cuts = [" 0.0 0.9 ", " 0.9 2.4 "]
-cuts = [" 0.0 0.5 "]#, " 0.9 1.4 ", " 1.4 2.4 "]
+#cuts = [" 0.0 0.5 ", " 0.5 0.9 ", " 0.9 1.5 ", " 1.5 2.4 "]
+#cuts = [" 0.0 0.5 ", " 0.5 0.7 ", " 0.7 0.9 ", " 0.9 1.4 ", " 1.4 2.4 "]
+#cuts = [" 0.0 0.9 "]#, " 0.9 1.4 ", " 1.4 2.4 "]
+cuts = [" -2.4 -1.4 ", " -1.4 -0.9 ", " -0.9 0.0 ", " 0.0 0.9 ", " 0.9 1.4 ", " 1.4 2.4 "]
 #cuts = ["5.0 10.0"]
 #cuts = [" 0.0 0.2 "]
 grs = []

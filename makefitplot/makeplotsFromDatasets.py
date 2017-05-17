@@ -4,48 +4,66 @@ import os.path
 import sys
 import makefitplot as fplt
 
-tag = "fullRange"
-#process = "H4L"
+### tag plotdir inherit from datasetfileBase
+
+
+tag = "muMinusPtResidual_fullRange"
+#tag = "eta_0p0_0p9"
+#tag = "eta_0p9_2p4"
+process = "H4L"
 #process = "Z4L"
-process = "ZZ4L"
+#process = "ZZ4L"
 #process = "Z2L"
 
-pdfName1 = "doubleCB_1"
-pdfName2 = "gauss_1"
-plotdir = "20170516_residual_1overpT"
+datasetfileBase = "muMinusCurveResidual_pt_"
+plotdir = "20170518_residual_1overpT_muMinus"
+
+#pTs = [5,10,15,20,25,30,35,40,50,60,100]
+pTs = [10,20,50]
+
+pTs[:] = [1.0/x for x in pTs]
+pTs = pTs[::-1]
+pTs.append(0.2)
+#print pTs
+#sys.exit()
+#pTs = [0.01,0.022,0.028,0.035,0.04,0.047,0.052,0.06,0.08,0.1,0.13,0.2]
+#etas = [0.0,0.9]#,1.4,2.4]
+etas = [-2.4,-1.4,-0.9,0.0,0.9,1.4,2.4]
+
+#####
+#less modify
+#####
 
 plotpath = "/home/mhl/public_html/2017/"+plotdir+"/"+process+"_"+tag+"/"
 if (not os.path.exists(plotpath)):
    call('mkdir -p ' + plotpath, shell=True)
    call('cp /home/mhl/public_html/index.php ' + plotpath, shell=True)
 else:
-   continueFit =  raw_input('plot dir exsit, overwrite ? : ')
+   continueFit =  raw_input('plot dir "' + plotpath  + '" exsit, overwrite ? : ')
    if (not (continueFit == "y" or continueFit == "yes") ):
-      print "plots exsit, move them away or create new dir first !"
+      print "path: " + plotpath  + " exsit, move them away or create new dir first !"
       sys.exit()
    else:
       call('rm  ' + plotpath + '*.png',shell=True)
       call('rm  ' + plotpath + '*.pdf',shell=True)
       call('rm  ' + plotpath + '*.txt',shell=True)
 
+pdfName1 = "doubleCB_1"
+pdfName2 = "gauss_1"
+
 datafilepath = "/raid/raid9/mhl/HZZ4L_Run2_post2017Moriond/roodatasets/"
 
-xLow = -0.2
-xHigh = 0.2
+xLow = -0.1
+xHigh = 0.1
 xBins = 100
 
 # save fitted parameters 
 summaryTxtPath = "/raid/raid9/mhl/HZZ4L_Run2_post2017Moriond/txtfiles/"
-summaryTxtName = process + "_muPtResidual_eta_"+tag+".txt"
+#summaryTxtName = process + "_muPtPull_eta_"+tag+".txt"
+summaryTxtName = process + tag+".txt"
 summaryTxt = summaryTxtPath+summaryTxtName
 if (os.path.exists(summaryTxt)): 
    call('rm ' + summaryTxt, shell=True)
-
-#pTs = [5,20,30,40,50,60,100]
-pTs = [5,10,15,20,25,30,35,40,50,60,100]
-pTs[:] = [1.0/x for x in pTs]
-pTs = pTs[::-1]
-etas = [0.0,0.5]#,1.4,2.4]
 
 for i in range(len(pTs)-1):
     for j in range(len(etas)-1):
@@ -59,12 +77,13 @@ for i in range(len(pTs)-1):
         "x_high":xHigh,\
         "x_bins":xBins,\
         "doLogy":False,\
-        "xTitle":"(pT_{reco}-pT_{gen})/pT_{gen}",\
+#        "xTitle":"(pT_{reco}-pT_{gen})/pTErr",\
+        "xTitle":"(1/pT_{reco}-1/pT_{gen})/(1/pT_{gen})",\
         "yTitle":"Events/" + str((xHigh-xLow)/xBins),\
         "savepath":plotpath
         }
 
-        config["savename"] = "muPtResidual_pt_" + str(pTLow).replace(".","p") + "_" + str(pTHigh).replace(".","p") \
+        config["savename"] = "muPtPull_pt_" + str(pTLow).replace(".","p") + "_" + str(pTHigh).replace(".","p") \
                                        + "_eta_" + str(etaLow).replace(".","p") + "_" + str(etaHigh).replace(".","p") + "_dcb"
         logDataset = ''
         logCut = ''
@@ -74,7 +93,11 @@ for i in range(len(pTs)-1):
         # gather information from 4 leptons
         for k in [1,2,3,4]:
 
-            datasetfile = "muPtResidual_pt_" + process + "_L"+str(k)+".root"
+#            datasetfile = "muPtPull_pt_" + process + "_L"+str(k)+".root"
+#            datasetfile = "muPtResidual_pt_" + process + "_L"+str(k)+".root"
+#            datasetfile = "muMinusCurveResidual_pt_" + process + "_L"+str(k)+".root"
+            datasetfile = datasetfileBase + process + "_L"+str(k)+".root"
+
             datafile = ROOT.TFile(datafilepath + datasetfile)
             logDataset += datafilepath + datasetfile + '\n'
             tmpworkspace = datafile.Get("w_out")
@@ -84,7 +107,7 @@ for i in range(len(pTs)-1):
 #                   pTGENL" + str(k) + " > " + str(pTLow) + " && pTGENL" + str(k) + " < " + str(pTHigh) + " && \
 #                   abs(etaL" + str(k) + ") > " + str(etaLow) + " && abs(etaL" + str(k) + ") < " + str(etaHigh) 
             cut =  "1/pTGENL" + str(k) + " > " + str(pTLow) + " && 1/pTGENL" + str(k) + " < " + str(pTHigh) + " && \
-                   abs(etaL" + str(k) + ") > " + str(etaLow) + " && abs(etaL" + str(k) + ") < " + str(etaHigh)
+                    etaL" + str(k) + " > " + str(etaLow) + " && etaL" + str(k) + " < " + str(etaHigh)
             logCut += cut + '\n'
 
 #            rv_passedFullSelection = ROOT.RooRealVar("passedFullSelection","",0,2)
@@ -123,17 +146,20 @@ for i in range(len(pTs)-1):
         fplt.WriteLog(config["savepath"]+config["savename"],"cut:\n " + logCut,False)
 
         # save sigma and alpha1,2 from fitted dcb, proceed with gaussian fit
+        mean = fplot.w.var("meanDCB").getVal()
         sigma = fplot.w.var("sigmaDCB").getVal() 
         alpha1 = fplot.w.var("alphaDCB").getVal()
         alpha2 = fplot.w.var("alpha2").getVal()
-        newFitRange = min(alpha1,alpha2)*sigma*0.8
+        newFitRange = min(alpha1,alpha2)*sigma*0.5
+        xLow_new = -1*newFitRange + mean
+        xHigh_new = newFitRange + mean
 
         # make new dataset, only allow data with smaller x range [-sigma*min(a1,a2), sigma*min(a1,a2)] * somefactor
-        dataset_reduce = dataset_append.reduce("abs(x) < " + str(newFitRange))
+        dataset_reduce = dataset_append.reduce("x < " + str(xHigh_new) + " && x > " + str(xLow_new))
         # set up config for second make fit plot class
-        config["x_low"] = -1*newFitRange
-        config["x_high"] = newFitRange
-        config["x_bins"] = 30
+        config["x_low"] = xLow_new
+        config["x_high"] = xHigh_new
+        config["x_bins"] = 50
         config["yTitle"] = "Events/" + str(round((config["x_high"]-config["x_low"])/config["x_bins"],5) )
         config["savename"] = config["savename"].replace("dcb","gauss")
 
@@ -148,7 +174,7 @@ for i in range(len(pTs)-1):
         fplot2.MakePlot()
         fplt.WriteLog(config["savepath"]+config["savename"],"dataset:\n " + logDataset)
         fplt.WriteLog(config["savepath"]+config["savename"],"cut:\n " + logCut,False)
-        fplt.WriteLog(config["savepath"]+config["savename"], "x > " + str(-1*newFitRange) + " && x < " + str(newFitRange) )
+        fplt.WriteLog(config["savepath"]+config["savename"], "x > " + str(xLow_new) + " && x < " + str(xHigh_new) )
 
         with open(summaryTxt, "a+") as myfile:
              myfile.write(' '.join([str(pTLow),str(pTHigh),str(etaLow),str(etaHigh), \
