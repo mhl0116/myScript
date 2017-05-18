@@ -8,7 +8,7 @@ import sys
 def MakeGraph(txtfile, cut, xIndex1, xIndex2, yIndex, yErrIndex):
 
     data = [line.strip().split() for line in open(txtfile, 'r') if cut in line]
-    print txtfile
+    print txtfile, cut
     print data
     x,y,xErr,yErr = array('f'),array('f'),array('f'),array('f')
     for i in range(len(data)):
@@ -57,34 +57,37 @@ def PlotGraph(grs,legends,markerstyle,markercolor,drawOption,xMin,xMax,xTitle,yM
     c.SaveAs(savepath + savename + ".png")
     c.SaveAs(savepath + savename + ".pdf")
 
+#txtfiles = ["Z4L_muCurveResidual_pt_fullRange.txt","H4L_muCurveResidual_pt_fullRange.txt"]
+#txtfiles = ["Z4L_muCurveResidual_pt_fullRange.txt","ZZ4L_muCurveResidual_pt_fullRange.txt"]
+txtfiles = ["Z4L_muCurveResidual_pt_checkEta.txt","H4L_muCurveResidual_pt_checkEta.txt"]
+#txtfiles = ["Z4L_muCurveResidual_pt_checkEta.txt","ZZ4L_muCurveResidual_pt_checkEta.txt"]
+#savename = "pTResiduals_Z4L_ZZ4L_"
+#savename = "pTResiduals_Z4L_H4L_"
+#savename = "pTResiduals_Z4L_ZZ4L_checkEta_"
+savename = "pTResiduals_Z4L_H4L_checkEta_"
 
+savepath = "/home/mhl/public_html/2017/20170518_muCurveResidual_pt/"
 txtpath = "/raid/raid9/mhl/HZZ4L_Run2_post2017Moriond/txtfiles/"
-#txtfiles = ["Z4LmuPlusPtResidual_fullRange.txt","H4LmuPlusPtResidual_fullRange.txt"]
-txtfiles = ["Z4LmuMinusPtResidual_fullRange.txt","H4LmuMinusPtResidual_fullRange.txt"]
-drawOption = "ep"
-#savepath = "/home/mhl/public_html/2017/20170518_residual_1overpT_muPlus/"
-savepath = "/home/mhl/public_html/2017/20170518_residual_1overpT_muMinus/"
-savename = "pTResiduals_Z4L_H4L_"
-#savename = "n2_Z4L_"
 
+drawOption = "ep"
 xMin = 0
-xMax = 0.2
+xMax = 2.4
 yMin = -0.004
 yMax = 0.004
 #yMin = 0
 #yMax = 15
-xTitle = "1/p_{T}^{gen}"
-#xTitle = "#eta"
+#xTitle = "1/p_{T}^{gen}"
+xTitle = "|#eta|"
 yTitle = "(1/pT_{Reco}-1/pT_{Gen})/(1/pT_{Gen})"
 #yTitle = "fitted n2"
 
-#cuts = [" 0.9 1.4 "]
-#cuts = [" 1.4 2.4 "]
+#cuts = [" 0.9 1.1 ", " 1.1 1.4 "]
+#cuts = [" 0.0 2.4 "]
 #cuts = [" 0.0 0.5 ", " 0.5 0.9 ", " 0.9 1.5 ", " 1.5 2.4 "]
 #cuts = [" 0.0 0.5 ", " 0.5 0.7 ", " 0.7 0.9 ", " 0.9 1.4 ", " 1.4 2.4 "]
-#cuts = [" 0.0 0.9 "]#, " 0.9 1.4 ", " 1.4 2.4 "]
-cuts = [" -2.4 -1.4 ", " -1.4 -0.9 ", " -0.9 0.0 ", " 0.0 0.9 ", " 0.9 1.4 ", " 1.4 2.4 "]
-#cuts = ["5.0 10.0"]
+#cuts = [" 0.0 0.9 ", " 0.9 1.4 ", " 1.4 2.4 "]
+#cuts = [" -2.4 -1.4 ", " -1.4 -0.9 ", " -0.9 0.0 ", " 0.0 0.9 ", " 0.9 1.4 ", " 1.4 2.4 "]
+cuts = ["0.04 0.08 "]
 #cuts = [" 0.0 0.2 "]
 grs = []
 legends = []
@@ -95,29 +98,25 @@ for i in range(len(cuts)):
     for j in range(len(txtfiles)):
         cut = cuts[i]
         txtfile = txtpath+txtfiles[j]
-#        grs.append(MakeGraph(txtfile, cut, 0, 1, 14, 15))
-        grs.append(MakeGraph(txtfile, cut, 0, 1, 4, 5))
+        grs.append(MakeGraph(txtfile, cut, 2, 3, 4, 5))
+#        grs.append(MakeGraph(txtfile, cut, 0, 1, 4, 5))
         cut1 = (cut.split())[0]
         cut2 = (cut.split())[1]
         if txtfiles[j].startswith("Z4L"):
-#        if "Z4L" in txtfiles[j]:
-#        if "VBF" in txtfiles[j]:
-#           legends.append("VBF ("+cut1+" < |#eta| < "+cut2+")")
 #           legends.append("Z #rightarrow 4L ("+cut1+" < |#eta| < "+cut2+")")
-           legends.append("Z #rightarrow 4L ("+cut1+" < pT < "+cut2+")")
+           legends.append("Z #rightarrow 4L ("+cut1+" < 1/pT < "+cut2+")")
            markercolor.append(1)
            markerstyle.append(20)
 
         if "H4L" in txtfiles[j]:
-#        if "ggH" in txtfiles[j]:
-#           legends.append("ggH ("+cut1+" < |#eta| < "+cut2+")")
-           legends.append("H #rightarrow 4L ("+cut1+" < |#eta| < "+cut2+")")
-#           legends.append("H #rightarrow 4L ("+cut1+" < pT < "+cut2+")")
+#           legends.append("H #rightarrow 4L ("+cut1+" < |#eta| < "+cut2+")")
+           legends.append("H #rightarrow 4L ("+cut1+" < 1/pT < "+cut2+")")
            markercolor.append(2)
            markerstyle.append(24)
 
         if "ZZ4L" in txtfiles[j]:
-           legends.append("ZZ #rightarrow 4L ("+cut1+" < |#eta| < "+cut2+")")
+#           legends.append("ZZ #rightarrow 4L ("+cut1+" < |#eta| < "+cut2+")")
+           legends.append("ZZ #rightarrow 4L ("+cut1+" < 1/pT < "+cut2+")")
            markercolor.append(2)
            markerstyle.append(24)
 

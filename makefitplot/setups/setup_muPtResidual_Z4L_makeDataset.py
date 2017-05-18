@@ -51,7 +51,7 @@ config = \
 "inputfilename":"ZZTo4L_13TeV_powheg_pythia8_ext1_RunIISummer16MiniAODv2.root",\
 #        "inputfilename":"DYJetsToLL_M-50_kalman_v4_m2mu.root",\
 "treename":"passedEvents",\
-"cut":"passedFullSelection > 0.5 && mass4l > 70 && mass4l < 105 && finalState == 1 && idL" + lepIndex + " == -13 && \
+"cut":"passedFullSelection > 0.5 && mass4l > 70 && mass4l < 105 && finalState == 1 && \
        pTGENL" + lepIndex + " > " + str(pt1)  + " && pTGENL" + lepIndex + " < " + str(pt2) + " && \
        abs(etaL" + lepIndex + ") > " + str(eta1) + " && abs(etaL" + lepIndex + ") < " + str(eta2),\
 "x_low":-5,\

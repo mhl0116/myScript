@@ -54,8 +54,8 @@ config = \
 "cut":"passedFullSelection > 0.5 && massZ1 > 80 && massZ1 < 100 && massZ2 > 80 && massZ2 < 100 && finalState == 1 && \
        pTGENL" + lepIndex + " > " + str(pt1)  + " && pTGENL" + lepIndex + " < " + str(pt2) + " && \
        abs(etaL" + lepIndex + ") > " + str(eta1) + " && abs(etaL" + lepIndex + ") < " + str(eta2),\
-"x_low":-0.2,\
-"x_high":0.2,\
+"x_low":-5,\
+"x_high":5,\
 "x_bins": 100,\
 "pdfname": "doubleCB_1",\
 # for bin fit
@@ -67,10 +67,10 @@ config = \
                ROOT.RooRealVar("finalState","",0,5),\
                ROOT.RooRealVar("etaL" + lepIndex,"",-2.5,2.5),\
                ROOT.RooRealVar("nFSRPhotons","",0,10)],\
-"plotVarFormula": "(pTL" + lepIndex + "-pTGENL" + lepIndex + ")/pTGENL" + lepIndex,\
+"plotVarFormula": "(1/pTL" + lepIndex + "- 1/pTGENL" + lepIndex + ")/(1/pTGENL" + lepIndex+")",\
 # plot set up
 "doLogy":False,\
-"xTitle": "(pT_{reco}-pT_{gen})/pT_{gen}",\
+"xTitle": "",\
 "yTitle": "",\
 "savepath": datasetpath,\
 "savename": datasetname

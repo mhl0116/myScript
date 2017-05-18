@@ -5,13 +5,13 @@ import sys
 pt_fullRange = [5,100]
 eta_fullRange = [0,2.4]
 
-process = "H4L"
+#process = "H4L"
 #process = "Z4L"
-#process = "ZZ4L"
+process = "ZZ4L"
 #process = "Z2L"
 
 datasetpath = "/raid/raid9/mhl/HZZ4L_Run2_post2017Moriond/roodatasets/"
-datasetname = "muMinusCurveResidual_pt_"+process
+datasetname = "muCurveResidual_pt_"+process
 
 lepIndexs = [1,2,3,4]
 
