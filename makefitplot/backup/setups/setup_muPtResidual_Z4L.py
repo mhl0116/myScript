@@ -12,6 +12,8 @@ def ParseOption():
     parser.add_argument('--etas',dest='etas', nargs='+', help='', type=float)#, required=True)
     parser.add_argument('--txtpath', dest='txtpath', type=str, help='')
     parser.add_argument('--txtname', dest='txtname', type=str, help='')
+    parser.add_argument('--plotpath', dest='plotpath', type=str, help='')
+    parser.add_argument('--plotname', dest='plotname', type=str, help='')
 
     args = parser.parse_args()
     return args
@@ -22,6 +24,8 @@ pts = args.pts #[5,20,40,50,60,100]
 etas = args.etas #[0,0.9,1.8,2.4]
 summaryTxtPath = args.txtpath #"/raid/raid9/mhl/HZZ4L_Run2_post2017Moriond/txtfiles/"
 summaryTxtName = args.txtname #"Z4L_muPtResidual.txt"
+
+plotpath = args.plotpath
 
 pt1 = pts[0]
 pt2 = pts[1]
@@ -41,13 +45,14 @@ config = \
 "inputfilename":"ZZTo4L_13TeV_powheg_pythia8_ext1_RunIISummer16MiniAODv2.root",\
 #        "inputfilename":"DYJetsToLL_M-50_kalman_v4_m2mu.root",\
 "treename":"passedEvents",\
-"cut":"passedFullSelection > 0.5 && mass4l > 70 && mass4l < 105 && finalState == 1 && nFSRPhotons == 0 && \
+"cut":"passedFullSelection > 0.5 && mass4l > 70 && mass4l < 105 && finalState == 1 && \
        pTGENL4 > " + str(pt1)  + " && pTGENL4 < " + str(pt2) + " && \
        abs(etaL4) > " + str(eta1) + " && abs(etaL4) < " + str(eta2),\
-"x_low":-0.1,\
-"x_high":0.1,\
+"x_low":-0.2,\
+"x_high":0.2,\
 "x_bins": 100,\
 "pdfname": "doubleCB_1",\
+#"pdfname": "gauss_1",\
 # for bin fit
 "roorealvars":[ROOT.RooRealVar("pTL4","",0,100),\
                ROOT.RooRealVar("pTGENL4","",0,100),\
@@ -61,7 +66,7 @@ config = \
 "doLogy":False,\
 "xTitle": "(pT_{reco}-pT_{gen})/pT_{gen}",\
 "yTitle": "",\
-"savepath": "/home/mhl/public_html/2017/20170508_checkResiduals_noFSR/Z4L/",\
+"savepath": plotpath,\
 "savename": "muPtResidual_pt_" + str(pt1).replace(".","p") + "_" + str(pt2).replace(".","p") \
                      + "_eta_" + str(eta1).replace(".","p") + "_" + str(eta2).replace(".","p")
 }
@@ -118,6 +123,17 @@ makeplotClass.MakePlot()
 with open(summaryTxt, "a+") as myfile:
      myfile.write(' '.join([str(pt1),str(pt2),str(eta1),str(eta2), \
      str(makeplotClass.w.var("meanDCB").getVal() ), \
-     str(makeplotClass.w.var("meanDCB").getError() ) ] ) + '\n' )
+     str(makeplotClass.w.var("meanDCB").getError() ),\
+     str(makeplotClass.w.var("sigmaDCB").getVal() ), \
+     str(makeplotClass.w.var("sigmaDCB").getError() ), \
+     str(makeplotClass.w.var("alphaDCB").getVal() ), \
+     str(makeplotClass.w.var("alphaDCB").getError() ),\
+     str(makeplotClass.w.var("nDCB").getVal() ), \
+     str(makeplotClass.w.var("nDCB").getError() ), \
+     str(makeplotClass.w.var("alpha2").getVal() ), \
+     str(makeplotClass.w.var("alpha2").getError() ), \
+     str(makeplotClass.w.var("n2").getVal() ), \
+     str(makeplotClass.w.var("n2").getError() ) ] )  + '\n')
+#     str(makeplotClass.w.var("meanDCB").getError() ) ] ) + '\n' )
 myfile.close()
 

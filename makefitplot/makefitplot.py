@@ -17,7 +17,7 @@ def WriteLog(saveInfo, log, overwrite=True):
        myfile.close()
     else:
        with open(saveInfo+".txt", "a+") as myfile:
-            myfile.write(datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S') + " EDT \n")
+#            myfile.write(datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S') + " EDT \n")
             myfile.write(log + "\n")
        myfile.close()
 
@@ -91,6 +91,8 @@ class MakeFitPlot():
           self.plotVarFormula = self.config["plotVarFormula"]
           self.plotArgList = self.config["plotArgList"]
 
+          self.doWeightDataset = False #self.config["doWeightDataset"]
+
           self.rooargset = ROOT.RooArgSet()
           for roorealvar in self.roorealvars:
               self.rooargset.add(roorealvar)
@@ -105,6 +107,15 @@ class MakeFitPlot():
              x_indata = self.dataset.addColumn(x_formula)
              x_indata.setRange(self.x_low,self.x_high)
 
+             print "sumEntries: ", self.dataset.sumEntries()
+             self.dataset.Print()
+             if self.doWeightDataset:
+                self.weight = self.config["weight"]
+                tmpDataset = ROOT.RooDataSet(self.dataset.GetName(), self.dataset.GetTitle(), self.dataset, ROOT.RooArgSet(self.dataset.get()), "", self.weight)
+                tmpDataset.Print()
+                print "sumEntries: ", tmpDataset.sumEntries(), tmpDataset.isWeighted()
+                self.dataset = tmpDataset
+                print "sumEntries: ", self.dataset.sumEntries()
 
       def SetUpPlotVar(self, dataset):
 
@@ -164,6 +175,7 @@ class MakeFitPlot():
           latex.SetTextFont(42)
           latex.SetTextAlign(11)
           latex.DrawLatex(0.25, 0.25, "#chi^{2}/DOF = %.3f" %(self.chi2))
+          latex.DrawLatex(0.25, 0.21, "nEvents = %.3f" %(dataset.sumEntries()))
 
           c.SaveAs(self.savepath + self.savename + ".png")
           c.SaveAs(self.savepath + self.savename + ".pdf")
@@ -207,7 +219,7 @@ class MakeFitPlot():
       def MakePdfFactory(self):
 
           self.w.factory('DoubleCB::doubleCB_1(x, \
-                          meanDCB[0,-0.1,0.1], sigmaDCB[0.01,0,10], \
+                          meanDCB[0,-0.5,0.5], sigmaDCB[0.01,0,10], \
                           alphaDCB[1,0,5], nDCB[5,0,20], alpha2[1,0,5], n2[5,0,100])')
 
           self.w.factory('DoubleCB::doubleCB_2(x, \
@@ -222,7 +234,12 @@ class MakeFitPlot():
                           meanDCB_fix_H4mu[125.000], sigmaDCB_fix_H4mu[0.00191], \
                           alphaDCB_fix_H4mu[1.082], nDCB_fix_H4mu[1.537], alpha2_fix_H4mu[1.108], n2_fix_H4mu[2.173])')
 
-          self.w.factory('Gaussian::gauss_1(x, meanGauss[0,-0.1,0.1], sigmaGauss[0.01,0,1])')
+          self.w.factory('Gaussian::gauss_z4l(x, meanGauss_z4l[91,88,94], sigmaGauss_z4l[1,0,10])')
+          self.w.factory('Gaussian::gauss_h4l(x, meanGauss_h4l[125,124,126], sigmaGauss_h4l[1,0,10])')
+
+          self.w.factory('Gaussian::gauss_1(x, meanGauss[0.094,-0.2,0.2], sigmaGauss[0.8,0,5])')
+
+          self.w.factory('Gaussian::gauss_2(x, meanGauss_2[0.01,-0.2,0.2], sigmaGauss_2[0.01,0,5])')
 
           self.w.factory('Gaussian::gauss_h_gen(x, meanGauss_h_gen[125], sigmaGauss_h_gen[0.004])')
 
@@ -238,6 +255,8 @@ class MakeFitPlot():
 
           self.w.factory('FCONV::BWxDCB(x,bw_fix,doubleCB_1)')
 
+          self.w.factory('FCONV::BWxGauss(x,bw_fix,gauss_1)')
+
           self.w.factory('FCONV::BWxDCB_h(x,bw_h_fix,doubleCB_1)')
 
           self.w.factory('FCONV::DCBxDCB_h(x,doubleCB_fix_H4mu,doubleCB_1)')
@@ -249,6 +268,7 @@ class MakeFitPlot():
           self.w.factory('Bernstein::bernstein_float(x, {b0[1,-100,100], b1[10,-100,100], b2[10,-100,100]})')
 
           self.w.factory('SUM:model_m4l_Z4L(f1[0.8,0,1]*BWxDCB, bernstein_float)')
+#          self.w.factory('SUM:model_m4l_Z4L(f1[0.8,0,1]*BWxGauss, bernstein_float)')
 
           #self.w.factory('SUM:model(fsig[0.9,0.7,1]*doubleCB_1, gauss_1)')
 

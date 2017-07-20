@@ -79,14 +79,14 @@ w = RooWorkspace('w')
 xmin = binInfo[1]
 xmax = binInfo[2]
 
-w.factory('Gaussian::gauss(x[' + str(xmin) + ',' + str(xmax) + '],meanGauss1[90, 40, 120],sigmaGauss1[10, 0, 100])')
+w.factory('Gaussian::gauss(x[' + str(xmin) + ',' + str(xmax) + '],meanGauss1[91,88,94],sigmaGauss1[1,0,10])')
 #w.factory('Gaussian::gauss(x[' + str(xmin) + ',' + str(xmax) + '],meanGauss[7.22605e+01],sigmaGauss[1.08673e+01])')
 
 w.factory('BreitWigner::bw(x[' + str(xmin) + ',' + str(xmax) + '],meanBW[91.2, 80, 100],sigmaBW[2.5,2,3])')
 #w.factory('BreitWigner::bw(x[' + str(xmin) + ',' + str(xmax) + '],meanBW[91.19],sigmaBW[2.49])')
 
 #w.factory('DoubleCB::doubleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
-#                              meanDCB[125,120,130], sigmaDCB[5,0,10],  \
+#                              meanDCB[125,120,130], sigmaDCB[0.1,0,10],  \
 #                              alphaDCB[1,0,10], nDCB[1,0,10], alpha2[1,0,10], n2[1,0,50])')
 
 #4e refit
@@ -100,8 +100,9 @@ w.factory('BreitWigner::bw(x[' + str(xmin) + ',' + str(xmax) + '],meanBW[91.2, 8
 #                              alphaDCB[1,0,10], nDCB[1,0,10], alpha2[1,0,10], n2[1,0,50])')
 #                              alphaDCB[1.237], nDCB[2.482], alpha2[2.363], n2[1.873])')
 
+
 w.factory('DoubleCB::doubleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
-                              meanDCB[0,-1,1], sigmaDCB[0.01, 0, 5], \
+                              meanDCB[91,80,100], sigmaDCB[1, 0, 5], \
                               alphaDCB[1,0,10], nDCB[1,0,10], alpha2[1,0,10], n2[1,0,50])')
 
 
@@ -187,7 +188,7 @@ if pdfName == 'model':
 #
 
 c1 = TCanvas("c1", "c1", 800, 800)
-#c1.SetLogy()
+c1.SetLogy()
 dummy = TH1D("dummy","dummy",1,binInfo[1],binInfo[2])
 #dummy = TH1D("dummy","dummy",1, 92,96)#binInfo[1],binInfo[2])
 dummy.SetMinimum(0.1)

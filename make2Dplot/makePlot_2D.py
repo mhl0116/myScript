@@ -73,7 +73,7 @@ for i in range(len(vars2)):
        HIST2.Add(hists2[i])
 '''
 
-HIST1.Scale(1/HIST1.Integral())
+#HIST1.Scale(1/HIST1.Integral())
 #HIST2.Scale(1/HIST2.Integral())
 
 c1 = TCanvas("c1", "c1", 800, 800)

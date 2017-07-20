@@ -85,4 +85,12 @@ cp  paraConfigurations_doFit.py paraConfigurations.py
 
 #python makePlot_1D_fit.py -t "GENZM_ZZSample"
 
-python makePlot_1D_fit.py -t "test_pT1_residual"
+#python makePlot_1D_fit.py -t "test_pT1_residual"
+#python makePlot_1D_fit.py -t "GENmassZZ_4mu_bare"
+#python makePlot_1D_fit.py -t "GENmassZZ_4mu_dressed"
+#python makePlot_1D_fit.py -t "GENMH_4mu"
+
+#python makePlot_1D_fit.py -t "jpsi_2mu"
+#python makePlot_1D_fit.py -t "GENZ4L_4mu_massZZ_passedFullSelection"
+python makePlot_1D_fit.py -t "GENZ4L_4mu_massZZ_passedFullSelection_noGENFsr"
+

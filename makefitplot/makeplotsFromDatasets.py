@@ -4,33 +4,47 @@ import os.path
 import sys
 import makefitplot as fplt
 
-#tag = "eta_0p0_0p9"
-#tag = "eta_0p9_2p4"
-process = "H4L"
-#process = "Z4L"
+sys.path.insert(0, '/raid/raid8/mhl/HZZ4L_Run2_post2017Moriond/plotScript/utils')
+import utils
+
+#process = "H4L"
+process = "Z4L"
 #process = "ZZ4L"
 ##process = "Z2L"
-datasetfileBase = "muCurveResidual_pt"
+#datasetfileBase = "muPtResidual_allM4l"
+#datasetfileBase = "muPtResidual_allM4l_Z2AT4"
+#datasetfileBase = "muPtResidual_allM4l_combine_ggH125_zz4L_Z2AT4"
+#datasetfileBase = "muPtResidual_allM4l_combine_ggH124_125_126_zz4L_Z2AT12"
+#datasetfileBase = "muPtResidual_allM4l_combine_ggH125_zz4L_Z2AT4_L34"
+#datasetfileBase = "muPtResidual_allM4l_combine_ggH_ZZ4L"
+#datasetfileBase = "muPtResidual_pt"
+#datasetfileBase = "muCurveResidual_pt_nofsr"
 #datasetfileBase = "muPlusCurveResidual_pt"
 #datasetfileBase = "muMinusCurveResidual_pt"
-
+#datasetfileBase = "muPtResidual_allM4l_combine124_125_126"
+#datasetfileBase = "muPtResidual_allM4l_MuPt4_Z2AT4_withFSR"
+#datasetfileBase = "muPtResidual_allM4l_MuPt4_Z2AT4_noFSR"
+#datasetfileBase = "muPtCurvature_muPlus"
+datasetfileBase = "muPtResidual_muMinus"
+#tag = datasetfileBase + "_lowPt"
 #tag = datasetfileBase + "_fullRange"
-tag = datasetfileBase + "_checkEta"
-plotdir = "20170518_" + datasetfileBase
+#tag = datasetfileBase + "_eta_0p0_0p9_pt_10_100"
+#tag = datasetfileBase + "_eta_1p8_2p4_pt_10_100"
+#tag = datasetfileBase + "_checkEta"
+#tag = datasetfileBase + "_allM4l_combine_124_125_126"
+#tag = datasetfileBase + "_allM4l_combine_ggH_ZZ4L"
+tag = datasetfileBase #+ "_plus1Sigma"# + "_pt_9_10_11" #+ "_use_3and4_lep"
 
-#pTs = [5,10,15,20,25,30,35,40,50,60,100]
-#pTs = [10,15,20,25,30,40,50]
+plotdir = "20170719_" + datasetfileBase 
+
+#pTs = [5,6,7,8,9,10,15,25,40,100]
+pTs = [5,6,7,8,9,10,15,20,25,30,35,40,45,50,100]#,25,40,100]
+
 #pTs[:] = [1.0/x for x in pTs]
 #pTs = pTs[::-1]
 #pTs.append(0.2)
 
-#print pTs
-#sys.exit()
-#pTs = [0.01,0.02,0.03,0.04,0.05,0.06,0.07,0.08,0.09,0.1,0.11,0.12,0.15,0.2]
-pTs = [0.04,0.08]
-etas = [0.0,0.9,1.8,2.4]
-#etas = [0.0,1.4,2.4]
-#etas = [-2.4,-1.4,-0.9,0.0,0.9,1.4,2.4]
+etas = [0.0,0.9,2.4]
 
 #####
 #less modify
@@ -52,16 +66,17 @@ else:
 
 pdfName1 = "doubleCB_1"
 #pdfName2 = "doubleCB_1"
-pdfName2 = "gauss_1"
+pdfName2 = "gauss_2"
 
-datafilepath = "/raid/raid9/mhl/HZZ4L_Run2_post2017Moriond/roodatasets/"
+datafilepath = "/raid/raid8/mhl/HZZ4L_Run2_post2017Moriond/roodatasets/"
 
-xLow = -0.1
-xHigh = 0.1
-xBins = 50#100
+xLow = -0.5
+xHigh = 0.5
+xBins = 100
 
 # save fitted parameters 
-summaryTxtPath = "/raid/raid9/mhl/HZZ4L_Run2_post2017Moriond/txtfiles/"
+summaryTxtPath = "/raid/raid8/mhl/HZZ4L_Run2_post2017Moriond/txtfiles/"
+#summaryTxtPath = "/raid/raid9/mhl/HZZ4L_Run2_post2017Moriond/txtfiles/"
 #summaryTxtName = process + "_muPtPull_eta_"+tag+".txt"
 summaryTxtName = process + "_" + tag+".txt"
 summaryTxt = summaryTxtPath+summaryTxtName
@@ -80,12 +95,13 @@ for i in range(len(pTs)-1):
         "x_high":xHigh,\
         "x_bins":xBins,\
         "doLogy":False,\
-#        "xTitle":"(pT_{reco}-pT_{gen})/pTErr",\
-        "xTitle":"(1/pT_{reco}-1/pT_{gen})/(1/pT_{gen})",\
+        "xTitle":"(pT_{reco}-pT_{gen})/pT_{gen}",\
+#        "xTitle":"(1/pT_{reco}-1/pT_{gen})/(1/pT_{gen})",\
         "yTitle":"Events/" + str((xHigh-xLow)/xBins),\
         "savepath":plotpath
         }
 
+#        config["savename"] = "muPtCurvature_" + str(pTLow).replace(".","p") + "_" + str(pTHigh).replace(".","p") \
         config["savename"] = "muPtResidual_pt_" + str(pTLow).replace(".","p") + "_" + str(pTHigh).replace(".","p") \
                                        + "_eta_" + str(etaLow).replace(".","p") + "_" + str(etaHigh).replace(".","p") + "_dcb"
         logDataset = ''
@@ -95,36 +111,44 @@ for i in range(len(pTs)-1):
 
         # gather information from 4 leptons
         for k in [1,2,3,4]:
+#        for k in [3,4]:
 
-#            datasetfile = "muPtPull_pt_" + process + "_L"+str(k)+".root"
-#            datasetfile = "muPtResidual_pt_" + process + "_L"+str(k)+".root"
-#            datasetfile = "muMinusCurveResidual_pt_" + process + "_L"+str(k)+".root"
             datasetfile = datasetfileBase + "_" + process + "_L"+str(k)+".root"
 
             datafile = ROOT.TFile(datafilepath + datasetfile)
             logDataset += datafilepath + datasetfile + '\n'
             tmpworkspace = datafile.Get("w_out")
             dataset = tmpworkspace.obj("dataset")
+           
+            print dataset.sumEntries()
 
-#            cut = "passedFullSelection > 0.5 && mass4l > " + str(m4lLow) + " && mass4l < " + str(m4lHigh) + " && finalState == 1 && \
-#                   pTGENL" + str(k) + " > " + str(pTLow) + " && pTGENL" + str(k) + " < " + str(pTHigh) + " && \
-#                   abs(etaL" + str(k) + ") > " + str(etaLow) + " && abs(etaL" + str(k) + ") < " + str(etaHigh) 
-            cut =  "1/pTGENL" + str(k) + " > " + str(pTLow) + " && 1/pTGENL" + str(k) + " < " + str(pTHigh) + " && \
-                    abs(etaL" + str(k) + ") > " + str(etaLow) + " && abs(etaL" + str(k) + ") < " + str(etaHigh)
-            logCut += cut + '\n'
+             
+            cut = "pTGENL" + str(k) + " > " + str(pTLow) + " && pTGENL" + str(k) + " < " + str(pTHigh) + " && \
+                   abs(etaL" + str(k) + ") > " + str(etaLow) + " && abs(etaL" + str(k) + ") < " + str(etaHigh) 
+            #cut = "1/pTGENL" + str(k) + " > " + str(pTLow) + " && 1/pTGENL" + str(k) + " < " + str(pTHigh) + " && \
+            #       abs(etaL" + str(k) + ") > " + str(etaLow) + " && abs(etaL" + str(k) + ") < " + str(etaHigh)
+#                   etaL" + str(k) + " > " + str(etaLow) + " && etaL" + str(k) + " < " + str(etaHigh)
 
-#            rv_passedFullSelection = ROOT.RooRealVar("passedFullSelection","",0,2)
-#            rv_mass4l = ROOT.RooRealVar("mass4l","",m4lLow,m4lHigh)
-#            rv_finalState = ROOT.RooRealVar("finalState","",0,5)
-            rv_genPt = ROOT.RooRealVar("pTGENL"+str(k),"",5,100)
-            rv_pT = ROOT.RooRealVar("pTL"+str(k),"",5,100)
+            rv_genPt = ROOT.RooRealVar("pTGENL"+str(k),"",0,100)
+            rv_pT = ROOT.RooRealVar("pTL"+str(k),"",0,100)
             rv_eta = ROOT.RooRealVar("etaL"+str(k),"",-2.4,2.4)
+            '''
+            cut = "pTGEN_noFSR_L" + str(k) + " > " + str(pTLow) + " && pTGEN_noFSR_L" + str(k) + " < " + str(pTHigh) + " && \
+                   abs(eta_noFSR_L" + str(k) + ") > " + str(etaLow) + " && abs(eta_noFSR_L" + str(k) + ") < " + str(etaHigh)
+            rv_genPt = ROOT.RooRealVar("pTGEN_noFSR_L"+str(k),"",0,100)
+            rv_pT = ROOT.RooRealVar("pT_noFSR_L"+str(k),"",0,100)
+            rv_eta = ROOT.RooRealVar("eta_noFSR_L"+str(k),"",-2.4,2.4)
+            ''' 
+
+            logCut += cut + '\n'
 
             rv_x = ROOT.RooRealVar("x","",xLow,xHigh)
 
             dataset_select = ROOT.RooDataSet("dataset_select_"+str(k),"",dataset, ROOT.RooArgSet(rv_genPt,rv_pT,rv_eta,rv_x),cut)
 #                                  ROOT.RooArgSet(rv_passedFullSelection,rv_mass4l,rv_finalState,rv_genPt,rv_pT,rv_eta,rv_x),cut)
-  
+
+            print dataset_select.sumEntries()
+ 
             # plot only interesting variable x, and avoid problem when append if different dataset have different columns  
             dataset_reduce = dataset_select.reduce(ROOT.RooArgSet(rv_x))
             datasets.append(dataset_reduce)
@@ -153,12 +177,18 @@ for i in range(len(pTs)-1):
         sigma = fplot.w.var("sigmaDCB").getVal() 
         alpha1 = fplot.w.var("alphaDCB").getVal()
         alpha2 = fplot.w.var("alpha2").getVal()
-        newFitRange = min(alpha1,alpha2)*sigma*0.9
+        newFitRange = min(alpha1,alpha2)*sigma*0.7
         xLow_new = -1*newFitRange + mean
         xHigh_new = newFitRange + mean
 
         # make new dataset, only allow data with smaller x range [-sigma*min(a1,a2), sigma*min(a1,a2)] * somefactor
+        x_Average = utils.GetAverage(dataset_append,rv_x)
+        x_Median = utils.GetMedian(dataset_append,rv_x)
+        print "gen: ", utils.GetMin(dataset_select,rv_genPt)
+        print "reco: ", utils.GetMin(dataset_select,rv_pT)
         dataset_reduce = dataset_append.reduce("x < " + str(xHigh_new) + " && x > " + str(xLow_new))
+        x_Average_2 = utils.GetAverage(dataset_reduce,rv_x)
+
         # set up config for second make fit plot class
         config["x_low"] = xLow_new
         config["x_high"] = xHigh_new
@@ -183,7 +213,8 @@ for i in range(len(pTs)-1):
              myfile.write(' '.join([str(pTLow),str(pTHigh),str(etaLow),str(etaHigh), \
 #             str(fplot2.w.var("meanDCB").getVal() ), \
 #             str(fplot2.w.var("meanDCB").getError() ) ] ) + '\n' )
-             str(fplot2.w.var("meanGauss").getVal() ), \
-             str(fplot2.w.var("meanGauss").getError() ) ] ) + '\n' )
+             str(fplot2.w.var("meanGauss_2").getVal()), \
+             str(fplot2.w.var("meanGauss_2").getError() ), \
+             str(x_Average), str(x_Median) ] ) + '\n' )
         myfile.close()
 

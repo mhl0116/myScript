@@ -45,7 +45,7 @@ latexNote1 = paraConfig['latexNote1']
 latexNote2 = paraConfig['latexNote2']
 doFit = paraConfig['doFit']
 pdfName = paraConfig['pdfName']
-color1 = paraConfig['color1']
+#color1 = paraConfig['color1']
 #doUnbinFit = paraConfig['doUnbin']
 
 ####
@@ -140,7 +140,7 @@ for i in range(len(vars2)):
 #weight_2 = RooRealVar('weight_2','',1/HIST2.Integral()*HIST1.Integral())
 
 #if not doUnbinFit:
-HIST2.Scale(1/HIST2.Integral()*HIST1.Integral())
+#HIST2.Scale(1/HIST2.Integral()*HIST1.Integral())
 dataset1 = RooDataHist('dataset1', 'dataset1', RooArgList(w.var('x')), HIST1, 1)
 dataset2 = RooDataHist('dataset2', 'dataset2', RooArgList(w.var('x')), HIST2, 1)
 #else:
@@ -192,6 +192,9 @@ if doFit:
    
 HIST1.Sumw2()
 HIST2.Sumw2()
+
+print HIST1.Integral(), HIST2.Integral()
+
 HIST1.Scale(1/HIST1.Integral())
 HIST2.Scale(1/HIST2.Integral())
 
@@ -201,18 +204,22 @@ HIST2.Scale(1/HIST2.Integral())
 
 c1 = TCanvas("c1", "c1", 800, 800)
 c1.SetLeftMargin(0.15)
+#c1.SetLogx()
 #c1.SetLogy()
+
 #pad1 = TPad("pad1", "pad1", 0, 0.3, 1, 1.0)
 #pad1.SetBottomMargin(0)
-#pad1.SetGridx()
+#c1.SetGridy()
 #pad1.Draw()
 #pad1.cd()
 #pad1.SetLogy()
 
 dummy = TH1D("dummy","dummy",1,binInfo[1],binInfo[2])
-dummy.SetMinimum(0)
+#dummy.SetMinimum(0.1)
 yMax1 = HIST1.GetMaximum()*1.2
 yMax2 = HIST2.GetMaximum()*1.2
+
+print yMax1, yMax2
 #Max_nofit = max(yMax1,yMax2)
 ## puzzle: if add above line, cannot access to yMax_doFit 4 lines later
 if not doFit:
@@ -231,8 +238,8 @@ dummy.GetXaxis().SetTitle(xTitle)
 dummy.Draw()
 
 if not doFit:
-   HIST1.Draw('hist same')
-   HIST2.Draw('hist same')
+   HIST1.Draw('HIST same')
+   HIST2.Draw('HIST same')
 else:
    xframe.Draw('same')
 
@@ -240,6 +247,10 @@ HIST1.SetLineColor(1)
 HIST2.SetLineColor(2)
 HIST1.SetLineWidth(1)
 HIST2.SetLineWidth(1)
+HIST1.SetMarkerStyle(20)
+HIST2.SetMarkerStyle(20)
+HIST1.SetMarkerColor(1)
+HIST2.SetMarkerColor(2)
 
 legend = TLegend(0.2,0.8,0.85,0.9)
 legend.AddEntry(HIST1, legend1, 'l')
@@ -257,7 +268,7 @@ legend.SetTextSize(0.04)
 legend.SetLineWidth(2)
 legend.SetFillColor(0)
 legend.SetBorderSize(0)
-#legend.Draw('SAME')
+legend.Draw('SAME')
 
 #legend2 = TLegend(0.2,0.4,0.42,0.55)
 #legend.AddEntry(HIST1, legend1, 'l')
@@ -284,17 +295,17 @@ latex.SetTextAlign(11)
 
 latex.SetTextColor(1)
 #latex.DrawLatex(0.64, 0.85, '#sigma_{dCB}^{m_{4#mu}} = ' + sigmaReco + ' GeV')
-latex.DrawLatex(0.2, 0.85, 'mean_{dCB}^{Z #rightarrow 4#mu} = ' + meanReco )
+#latex.DrawLatex(0.2, 0.85, 'mean_{dCB}^{Z #rightarrow 4#mu} = ' + meanReco )
 
 #latex.DrawLatex(0.2, 0.85, 'H #rightarrow ZZ #rightarrow 4#mu')
 #latex.DrawLatex(0.2, 0.78, 'm_{H} = 125 GeV')
 #latex.DrawLatex(0.64, 0.78, '#sigma_{dCB}^{m\'_{4#mu}} = ' + sigmaRefit + ' GeV')
-latex.SetTextColor(TColor.GetColor(color1))
-latex.DrawLatex(0.2, 0.78, 'mean_{dCB}^{Z #rightarrow 4#mu(ext)} = ' + meanRefit )
+#latex.SetTextColor(TColor.GetColor(color1))
+#latex.DrawLatex(0.2, 0.78, 'mean_{dCB}^{Z #rightarrow 4#mu(ext)} = ' + meanRefit )
 
 latex.DrawLatex(0.45, 0.85, latexNote1)
-if len(latexNote2) > 0:
-   latex.DrawLatex(0.45, 0.75, latexNote2)
+#if len(latexNote2) > 0:
+#   latex.DrawLatex(0.45, 0.75, latexNote2)
 '''
 c1.cd()
 pad2 = TPad("pad2", "pad2", 0, 0.05, 1, 0.3)
@@ -332,7 +343,8 @@ latex2.SetNDC()
 latex2.SetTextSize(0.5*c1.GetTopMargin())
 latex2.SetTextFont(42)
 latex2.SetTextAlign(31) # align right                                                                     
-latex2.DrawLatex(0.90, 0.95,"#sqrt{s} = 13 TeV")
+#latex2.DrawLatex(0.90, 0.95,"35.9fb^{-1} (13TeV)")
+latex2.DrawLatex(0.90, 0.95,"13TeV")
 latex2.SetTextSize(0.8*c1.GetTopMargin())
 latex2.SetTextFont(62)
 latex2.SetTextAlign(11) # align right                                                                     
@@ -341,7 +353,7 @@ latex2.SetTextSize(0.6*c1.GetTopMargin())
 latex2.SetTextFont(52)
 latex2.SetTextAlign(11)
 latex2.DrawLatex(0.28, 0.95, "Simulation")
-latex2.DrawLatex(0.465, 0.95, "Preliminary")
+#latex2.DrawLatex(0.28, 0.95, "Preliminary")
 latex2.SetTextFont(42)
 latex2.SetTextSize(0.45*c1.GetTopMargin())
 

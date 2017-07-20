@@ -1,6 +1,6 @@
 paraConfigs = { }
 
-savePath = '/home/mhl/public_html/2017/20170502_checkResiduals/Z4L_Z4Lext/'
+savePath = '/home/mhl/public_html/2017/20170720_ZLepOpenAngle/'
 
 saveName = 'electronPtErr_DY_H_2016'
 paraConfigs[saveName] = \
@@ -512,14 +512,14 @@ paraConfigs[saveName] = \
 'binInfo': [100, -2.4, 2.4],
 'vars1': ['etaL1','etaL2','etaL3','etaL4'],
 'vars2': ['etaL1','etaL2','etaL3','etaL4'],
-'cuts1': ['passedFullSelection && mass4l > 105 && mass4l < 140 && abs(idL1) == 13',\
-          'passedFullSelection && mass4l > 105 && mass4l < 140 && abs(idL2) == 13',\
-          'passedFullSelection && mass4l > 105 && mass4l < 140 && abs(idL3) == 13',\
-          'passedFullSelection && mass4l > 105 && mass4l < 140 && abs(idL4) == 13'],
-'cuts2': ['passedFullSelection && mass4l > 70 && mass4l < 105 && abs(idL1) == 13',\
-          'passedFullSelection && mass4l > 70 && mass4l < 105 && abs(idL2) == 13',\
-          'passedFullSelection && mass4l > 70 && mass4l < 105 && abs(idL3) == 13',\
-          'passedFullSelection && mass4l > 70 && mass4l < 105 && abs(idL4) == 13'],
+'cuts1': ['passedFullSelection && mass4l > 105 && mass4l < 140 && abs(idL1) == 13 && finalState == 1',\
+          'passedFullSelection && mass4l > 105 && mass4l < 140 && abs(idL2) == 13 && finalState == 1',\
+          'passedFullSelection && mass4l > 105 && mass4l < 140 && abs(idL3) == 13 && finalState == 1',\
+          'passedFullSelection && mass4l > 105 && mass4l < 140 && abs(idL4) == 13 && finalState == 1'],
+'cuts2': ['passedFullSelection && mass4l > 70 && mass4l < 105 && abs(idL1) == 13 && finalState == 1',\
+          'passedFullSelection && mass4l > 70 && mass4l < 105 && abs(idL2) == 13 && finalState == 1',\
+          'passedFullSelection && mass4l > 70 && mass4l < 105 && abs(idL3) == 13 && finalState == 1',\
+          'passedFullSelection && mass4l > 70 && mass4l < 105 && abs(idL4) == 13 && finalState == 1'],
 'weight1': ['1','1','1','1'],
 'weight2': ['1','1','1','1'],
 'xTitle': 'muon eta',
@@ -867,4 +867,539 @@ for i in range(len(pts)-1):
         'pdfName': 'doubleCB',
         'color1' : '#1427D1'
         }
+
+
+
+saveName = 'souting_veto2Z'
+paraConfigs[saveName] = \
+{\
+'rootPath1': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/Ana_ZZ4L_80X/Ntuples/',
+'rootPath2': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/Ana_ZZ4L_80X/Ntuples/',
+'rootfile1': 'scouting20170620.root',
+'rootfile2': 'scouting20170620.root',
+'tree1': 'passedEvents',
+'tree2': 'passedEvents',
+'binInfo': [200,70,1000],
+'vars1': ['mass4l'],
+'vars2': ['mass4l'],
+'cuts1': ['passedFullSelection && (massZ1 < 60 || massZ1 > 120) && (massZ2 < 60 || massZ2 > 120)'],
+'cuts2': ['passedFullSelection && (massZ1 < 60 || massZ1 > 120) && (massZ2 < 60 || massZ2 > 120)'],
+'weight1': ['1'],
+'weight2': ['1'],
+'xTitle': 'mass4l',
+'yTitle': '',
+'legend1': 'massZ_{1,2} > 120 or massZ_{1,2} < 60',
+'legend2': '',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': '', #
+'latexNote2': '',
+'doFit': True,
+'pdfName': 'doubleCB',
+'color1' : '#1427D1'
+}
+
+
+saveName = 'mass4l_2016Data_300_1200'
+paraConfigs[saveName] = \
+{\
+'rootPath1': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/Ana_ZZ4L_80X/Ntuples/',
+'rootPath2': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/Ana_ZZ4L_80X/Ntuples/',
+'rootfile1': 'Data2016.root',
+'rootfile2': 'Data2016.root',
+'tree1': 'passedEvents',
+'tree2': 'passedEvents',
+'binInfo': [90,300,1200],
+'vars1': ['mass4l'],
+'vars2': ['mass4lREFIT'],
+'cuts1': ['passedFullSelection && mass4l > 0 && mass4l < 10000 '],
+'cuts2': ['passedFullSelection && mass4lREFIT > 0 && mass4lREFIT < 10000 '],
+'weight1': ['1'],
+'weight2': ['1'],
+'xTitle': 'mass4l',
+'yTitle': 'Events/10GeV',
+'legend1': 'RECO,mZ2 > 4',
+'legend2': 'REFIT,mZ2 > 4',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': '', #
+'latexNote2': '',
+'doFit': False,
+'pdfName': 'doubleCB',
+'color1' : '#1427D1'
+}
+
+saveName = 'mass4l_2016Data_0_300'
+paraConfigs[saveName] = \
+{\
+'rootPath1': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/Ana_ZZ4L_80X/Ntuples/',
+'rootPath2': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/Ana_ZZ4L_80X/Ntuples/',
+'rootfile1': 'Data2016.root',
+'rootfile2': 'Data2016.root',
+'tree1': 'passedEvents',
+'tree2': 'passedEvents',
+'binInfo': [150,0,300],
+'vars1': ['mass4l'],
+'vars2': ['mass4lREFIT'],
+'cuts1': ['passedFullSelection && mass4l > 0 && mass4l < 10000 '],
+'cuts2': ['passedFullSelection && mass4lREFIT > 0 && mass4lREFIT < 10000 '],
+'weight1': ['1'],
+'weight2': ['1'],
+'xTitle': 'mass4l',
+'yTitle': 'Events/2GeV',
+'legend1': 'RECO,mZ2 > 4',
+'legend2': 'REFIT,mZ2 > 4',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': '', #
+'latexNote2': '',
+'doFit': False,
+'pdfName': 'doubleCB',
+'color1' : '#1427D1'
+}
+
+saveName = 'mass4l_2016Data_0_100'
+paraConfigs[saveName] = \
+{\
+'rootPath1': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/Ana_ZZ4L_80X/Ntuples/',
+'rootPath2': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/Ana_ZZ4L_80X/Ntuples/',
+'rootfile1': 'Data2016.root',
+'rootfile2': 'Data2016.root',
+'tree1': 'passedEvents',
+'tree2': 'passedEvents',
+'binInfo': [90,10,100],
+'vars1': ['mass4l'],
+'vars2': ['mass4lREFIT'],
+'cuts1': ['passedFullSelection && mass4l > 0 && mass4l < 10000 '],
+'cuts2': ['passedFullSelection && mass4lREFIT > 0 && mass4lREFIT < 10000 '],
+'weight1': ['1'],
+'weight2': ['1'],
+'xTitle': 'mass4l',
+'yTitle': 'Events/1GeV',
+'legend1': 'RECO,mZ2 > 4',
+'legend2': 'REFIT,mZ2 > 4',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': '', #
+'latexNote2': '',
+'doFit': False,
+'pdfName': 'doubleCB',
+'color1' : '#1427D1'
+}
+
+
+saveName = 'mass4l_2016Data_0_70'
+paraConfigs[saveName] = \
+{\
+'rootPath1': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/Ana_ZZ4L_80X/Ntuples/',
+'rootPath2': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/Ana_ZZ4L_80X/Ntuples/',
+'rootfile1': 'Data2016.root',
+'rootfile2': 'Data2016.root',
+'tree1': 'passedEvents',
+'tree2': 'passedEvents',
+'binInfo': [70,0,70],
+'vars1': ['mass4l'],
+'vars2': ['mass4lREFIT'],
+'cuts1': ['passedFullSelection && mass4l > 0 && mass4l < 10000 '],
+'cuts2': ['passedFullSelection && mass4lREFIT > 0 && mass4lREFIT < 10000 '],
+'weight1': ['1'],
+'weight2': ['1'],
+'xTitle': 'mass4l',
+'yTitle': 'Events/1GeV',
+'legend1': 'RECO,mZ2 > 4',
+'legend2': 'REFIT,mZ2 > 4',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': '', #
+'latexNote2': '',
+'doFit': False,
+'pdfName': 'doubleCB',
+'color1' : '#1427D1'
+}
+
+
+saveName = 'mass4l_2016Data_70_100'
+paraConfigs[saveName] = \
+{\
+'rootPath1': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/Ana_ZZ4L_80X/Ntuples/',
+'rootPath2': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/Ana_ZZ4L_80X/Ntuples/',
+'rootfile1': 'Data2016.root',
+'rootfile2': 'Data2016.root',
+'tree1': 'passedEvents',
+'tree2': 'passedEvents',
+'binInfo': [30,70,100],
+'vars1': ['mass4l'],
+'vars2': ['mass4lREFIT'],
+'cuts1': ['passedFullSelection && mass4l > 0 && mass4l < 10000 '],
+'cuts2': ['passedFullSelection && mass4lREFIT > 0 && mass4lREFIT < 10000 '],
+'weight1': ['1'],
+'weight2': ['1'],
+'xTitle': 'mass4l',
+'yTitle': 'Events/1GeV',
+'legend1': 'RECO,mZ2 > 4',
+'legend2': 'REFIT,mZ2 > 4',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': '', #
+'latexNote2': '',
+'doFit': False,
+'pdfName': 'doubleCB',
+'color1' : '#1427D1'
+}
+
+saveName = 'mass4l_2016Data_100_400'
+paraConfigs[saveName] = \
+{\
+'rootPath1': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/Ana_ZZ4L_80X/Ntuples/',
+'rootPath2': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/Ana_ZZ4L_80X/Ntuples/',
+'rootfile1': 'Data2016.root',
+'rootfile2': 'Data2016.root',
+'tree1': 'passedEvents',
+'tree2': 'passedEvents',
+'binInfo': [60,100,400],
+'vars1': ['mass4l'],
+'vars2': ['mass4lREFIT'],
+'cuts1': ['passedFullSelection && mass4l > 0 && mass4l < 10000 '],
+'cuts2': ['passedFullSelection && mass4lREFIT > 0 && mass4lREFIT < 10000 '],
+'weight1': ['1'],
+'weight2': ['1'],
+'xTitle': 'mass4l',
+'yTitle': 'Events/5GeV',
+'legend1': 'RECO,mZ2 > 4',
+'legend2': 'REFIT,mZ2 > 4',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': '', #
+'latexNote2': '',
+'doFit': False,
+'pdfName': 'doubleCB',
+'color1' : '#1427D1'
+}
+
+saveName = 'mass4l_2016Data_400_1200'
+paraConfigs[saveName] = \
+{\
+'rootPath1': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/Ana_ZZ4L_80X/Ntuples/',
+'rootPath2': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/Ana_ZZ4L_80X/Ntuples/',
+'rootfile1': 'Data2016.root',
+'rootfile2': 'Data2016.root',
+'tree1': 'passedEvents',
+'tree2': 'passedEvents',
+'binInfo': [80,400,1200],
+'vars1': ['mass4l'],
+'vars2': ['mass4lREFIT'],
+'cuts1': ['passedFullSelection && mass4l > 0 && mass4l < 10000 '],
+'cuts2': ['passedFullSelection && mass4lREFIT > 0 && mass4lREFIT < 10000 '],
+'weight1': ['1'],
+'weight2': ['1'],
+'xTitle': 'mass4l',
+'yTitle': 'Events/10GeV',
+'legend1': 'RECO,mZ2 > 4',
+'legend2': 'REFIT,mZ2 > 4',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': '', #
+'latexNote2': '',
+'doFit': False,
+'pdfName': 'doubleCB',
+'color1' : '#1427D1'
+}
+
+
+saveName = 'mass4l_closeMZ1MZ2_2016Data'
+paraConfigs[saveName] = \
+{\
+'rootPath1': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/Ana_ZZ4L_80X/Ntuples/',
+'rootPath2': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/Ana_ZZ4L_80X/Ntuples/',
+'rootfile1': 'Data2016.root',
+'rootfile2': 'Data2016.root',
+'tree1': 'passedEvents',
+'tree2': 'passedEvents',
+'binInfo': [500,0,2500],
+'vars1': ['mass4l'],
+'vars2': ['mass4lREFIT'],
+'cuts1': ['passedFullSelection && mass4l > 70 && mass4l < 2500 && abs(massZ1-massZ2) < 5 && abs(massZ1-91.2) > 2 && abs(massZ2-91.2) > 2'],
+'cuts2': ['passedFullSelection && mass4lREFIT > 70 && mass4lREFIT < 2500 && abs(massZ1-massZ2) < 5 && abs(massZ1-91.2) > 2 && abs(massZ2-91.2) > 2'],
+'weight1': ['1'],
+'weight2': ['1'],
+'xTitle': 'mass4l',
+'yTitle': 'Events/2GeV',
+'legend1': 'RECO,mZ2 > 4',
+'legend2': 'REFIT,mZ2 > 4',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': '', #
+'latexNote2': '',
+'doFit': False,
+'pdfName': 'doubleCB',
+'color1' : '#1427D1'
+}
+
+saveName = 'massZ2_2016Data'
+paraConfigs[saveName] = \
+{\
+'rootPath1': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/Ana_ZZ4L_80X/Ntuples/',
+'rootPath2': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/Ana_ZZ4L_80X/Ntuples/',
+'rootfile1': 'Data2016.root',
+'rootfile2': 'Data2016.root',
+'tree1': 'passedEvents',
+'tree2': 'passedEvents',
+'binInfo': [25,100,150],
+'vars1': ['massZ2'],
+'vars2': ['massZ2'],
+'cuts1': ['passedFullSelection','passedFullSelection || passedZXCRSelection'],
+'cuts2': ['passedFullSelection ','passedFullSelection || passedZXCRSelection'],
+'weight1': ['1','1'],
+'weight2': ['1','1'],
+'xTitle': 'massZ2',
+'yTitle': 'Events/2GeV',
+'legend1': 'RECO,mZ2 > 4',
+'legend2': 'REFIT,mZ2 > 4',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': '', #
+'latexNote2': '',
+'doFit': False,
+'pdfName': 'doubleCB',
+'color1' : '#1427D1'
+}
+
+
+saveName = 'massZ2_2016Data_fullRange'
+paraConfigs[saveName] = \
+{\
+'rootPath1': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/Ana_ZZ4L_80X/Ntuples/',
+'rootPath2': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/Ana_ZZ4L_80X/Ntuples/',
+'rootfile1': 'Data2016.root',
+'rootfile2': 'Data2016.root',
+'tree1': 'passedEvents',
+'tree2': 'passedEvents',
+'binInfo': [500,0,2500],
+'vars1': ['massZ2'],
+'vars2': ['massZ2'],
+'cuts1': ['passedFullSelection || passedZXCRSelection'],
+'cuts2': ['passedFullSelection || passedZXCRSelection'],
+'weight1': ['1','1'],
+'weight2': ['1','1'],
+'xTitle': 'massZ2',
+'yTitle': 'Events/2GeV',
+'legend1': 'RECO,mZ2 > 4',
+'legend2': 'REFIT,mZ2 > 4',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': '', #
+'latexNote2': '',
+'doFit': False,
+'pdfName': 'doubleCB',
+'color1' : '#1427D1'
+}
+
+saveName = 'mass4l_2016Data_all_1TeV_2TeV'
+paraConfigs[saveName] = \
+{\
+'rootPath1': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/Ana_ZZ4L_80X/Ntuples/',
+'rootPath2': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/Ana_ZZ4L_80X/Ntuples/',
+'rootfile1': 'test.root',
+'rootfile2': 'test.root',
+'tree1': 'passedEvents',
+'tree2': 'passedEvents',
+'binInfo': [50,1000,2000],
+'vars1': ['mass4l'],
+'vars2': ['mass4l'],
+'cuts1': [' mass4l < 2000 && mass4l > 1000'],
+'cuts2': [' mass4l < 2000 && mass4l > 1000'],
+'weight1': ['1'],
+'weight2': ['1'],
+'xTitle': 'mass4l',
+'yTitle': 'Events/20GeV',
+'legend1': 'RECO,mZ2 > 4',
+'legend2': 'REFIT,mZ2 > 4',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': '', #
+'latexNote2': '',
+'doFit': False,
+'pdfName': 'doubleCB',
+'color1' : '#1427D1'
+}
+
+
+saveName = 'Z1LepDeltaR_Z4L_H4L'
+paraConfigs[saveName] = \
+{\
+'rootPath1': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/Ana_ZZ4L_80X/Ntuples/',
+'rootPath2': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/Ana_ZZ4L_80X/Ntuples/',
+'rootfile1': 'ggH125_2016MC_MuPt4_Z2AT4_20170720.root',
+'rootfile2': 'ZZTo4L_2016MC_MuPt4_Z2AT4_20170720.root',
+'tree1': 'passedEvents',
+'tree2': 'passedEvents',
+'binInfo': [100,0,7],
+'vars1': ['Z1LepDeltaR'],
+'vars2': ['Z1LepDeltaR'],
+'cuts1': [' passedFullSelection && mass4l > 105 && mass4l < 140 && finalState == 1'],
+'cuts2': [' passedFullSelection && mass4l > 70 && mass4l < 105 && finalState == 1'],
+'weight1': ['1'],
+'weight2': ['1'],
+'xTitle': 'Z1LepDeltaR',
+'yTitle': 'Events',
+'legend1': 'H #rightarrow 4l events',
+'legend2': 'Z #rightarrow 4l events',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': '', #
+'latexNote2': '',
+'doFit': False,
+'pdfName': 'doubleCB',
+'color1' : '#1427D1'
+}
+
+
+saveName = 'Z2LepDeltaR_Z4L_H4L'
+paraConfigs[saveName] = \
+{\
+'rootPath1': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/Ana_ZZ4L_80X/Ntuples/',
+'rootPath2': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/Ana_ZZ4L_80X/Ntuples/',
+'rootfile1': 'ggH125_2016MC_MuPt4_Z2AT4_20170720.root',
+'rootfile2': 'ZZTo4L_2016MC_MuPt4_Z2AT4_20170720.root',
+'tree1': 'passedEvents',
+'tree2': 'passedEvents',
+'binInfo': [100,0,7],
+'vars1': ['Z2LepDeltaR'],
+'vars2': ['Z2LepDeltaR'],
+'cuts1': [' passedFullSelection && mass4l > 105 && mass4l < 140 && finalState == 1'],
+'cuts2': [' passedFullSelection && mass4l > 70 && mass4l < 105 && finalState == 1'],
+'weight1': ['1'],
+'weight2': ['1'],
+'xTitle': 'Z2LepDeltaR',
+'yTitle': 'Events',
+'legend1': 'H #rightarrow 4l events',
+'legend2': 'Z #rightarrow 4l events',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': '', #
+'latexNote2': '',
+'doFit': False,
+'pdfName': 'doubleCB',
+'color1' : '#1427D1'
+}
+
+
+saveName = 'Z1LepDeltaPhi_Z4L_H4L'
+paraConfigs[saveName] = \
+{\
+'rootPath1': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/Ana_ZZ4L_80X/Ntuples/',
+'rootPath2': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/Ana_ZZ4L_80X/Ntuples/',
+'rootfile1': 'ggH125_2016MC_MuPt4_Z2AT4_20170720.root',
+'rootfile2': 'ZZTo4L_2016MC_MuPt4_Z2AT4_20170720.root',
+'tree1': 'passedEvents',
+'tree2': 'passedEvents',
+'binInfo': [100,-3.15,3.15],
+'vars1': ['Z1LepDeltaPhi'],
+'vars2': ['Z1LepDeltaPhi'],
+'cuts1': [' passedFullSelection && mass4l > 105 && mass4l < 140 && finalState == 1'],
+'cuts2': [' passedFullSelection && mass4l > 70 && mass4l < 105 && finalState == 1'],
+'weight1': ['1'],
+'weight2': ['1'],
+'xTitle': 'Z1LepDeltaPhi',
+'yTitle': 'Events',
+'legend1': 'H #rightarrow 4l events',
+'legend2': 'Z #rightarrow 4l events',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': '', #
+'latexNote2': '',
+'doFit': False,
+'pdfName': 'doubleCB',
+'color1' : '#1427D1'
+}
+
+
+saveName = 'Z2LepDeltaPhi_Z4L_H4L'
+paraConfigs[saveName] = \
+{\
+'rootPath1': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/Ana_ZZ4L_80X/Ntuples/',
+'rootPath2': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/Ana_ZZ4L_80X/Ntuples/',
+'rootfile1': 'ggH125_2016MC_MuPt4_Z2AT4_20170720.root',
+'rootfile2': 'ZZTo4L_2016MC_MuPt4_Z2AT4_20170720.root',
+'tree1': 'passedEvents',
+'tree2': 'passedEvents',
+'binInfo': [100,-3.15,3.15],
+'vars1': ['Z2LepDeltaPhi'],
+'vars2': ['Z2LepDeltaPhi'],
+'cuts1': [' passedFullSelection && mass4l > 105 && mass4l < 140 && finalState == 1'],
+'cuts2': [' passedFullSelection && mass4l > 70 && mass4l < 105 && finalState == 1'],
+'weight1': ['1'],
+'weight2': ['1'],
+'xTitle': 'Z2LepDeltaPhi',
+'yTitle': 'Events',
+'legend1': 'H #rightarrow 4l events',
+'legend2': 'Z #rightarrow 4l events',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': '', #
+'latexNote2': '',
+'doFit': False,
+'pdfName': 'doubleCB',
+'color1' : '#1427D1'
+}
+
+
+saveName = 'Z2LepDeltaEta_Z4L_H4L'
+paraConfigs[saveName] = \
+{\
+'rootPath1': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/Ana_ZZ4L_80X/Ntuples/',
+'rootPath2': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/Ana_ZZ4L_80X/Ntuples/',
+'rootfile1': 'ggH125_2016MC_MuPt4_Z2AT4_20170720.root',
+'rootfile2': 'ZZTo4L_2016MC_MuPt4_Z2AT4_20170720.root',
+'tree1': 'passedEvents',
+'tree2': 'passedEvents',
+'binInfo': [100,-5,5],
+'vars1': ['Z2LepDeltaEta'],
+'vars2': ['Z2LepDeltaEta'],
+'cuts1': [' passedFullSelection && mass4l > 105 && mass4l < 140 && finalState == 1'],
+'cuts2': [' passedFullSelection && mass4l > 70 && mass4l < 105 && finalState == 1'],
+'weight1': ['1'],
+'weight2': ['1'],
+'xTitle': 'Z2LepDeltaEta',
+'yTitle': 'Events',
+'legend1': 'H #rightarrow 4l events',
+'legend2': 'Z #rightarrow 4l events',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': '', #
+'latexNote2': '',
+'doFit': False,
+'pdfName': 'doubleCB',
+'color1' : '#1427D1'
+}
+
+
+saveName = 'Z1LepDeltaEta_Z4L_H4L'
+paraConfigs[saveName] = \
+{\
+'rootPath1': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/Ana_ZZ4L_80X/Ntuples/',
+'rootPath2': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/Ana_ZZ4L_80X/Ntuples/',
+'rootfile1': 'ggH125_2016MC_MuPt4_Z2AT4_20170720.root',
+'rootfile2': 'ZZTo4L_2016MC_MuPt4_Z2AT4_20170720.root',
+'tree1': 'passedEvents',
+'tree2': 'passedEvents',
+'binInfo': [100,-5,5],
+'vars1': ['Z1LepDeltaEta'],
+'vars2': ['Z1LepDeltaEta'],
+'cuts1': [' passedFullSelection && mass4l > 105 && mass4l < 140 && finalState == 1'],
+'cuts2': [' passedFullSelection && mass4l > 70 && mass4l < 105 && finalState == 1'],
+'weight1': ['1'],
+'weight2': ['1'],
+'xTitle': 'Z1LepDeltaEta',
+'yTitle': 'Events',
+'legend1': 'H #rightarrow 4l events',
+'legend2': 'Z #rightarrow 4l events',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': '', #
+'latexNote2': '',
+'doFit': False,
+'pdfName': 'doubleCB',
+'color1' : '#1427D1'
+}
 

@@ -12,6 +12,7 @@ def ParseOption():
     parser.add_argument('--etas',dest='etas', nargs='+', help='', type=float)#, required=True)
     parser.add_argument('--txtpath', dest='txtpath', type=str, help='')
     parser.add_argument('--txtname', dest='txtname', type=str, help='')
+    parser.add_argument('--plotpath', dest='plotpath', type=str, help='')
 
     args = parser.parse_args()
     return args
@@ -22,6 +23,7 @@ pts = args.pts #[5,20,40,50,60,100]
 etas = args.etas #[0,0.9,1.8,2.4]
 summaryTxtPath = args.txtpath #"/raid/raid9/mhl/HZZ4L_Run2_post2017Moriond/txtfiles/"
 summaryTxtName = args.txtname #"Z4L_muPtResidual.txt"
+plotpath = args.plotpath
 
 pt1 = pts[0]
 pt2 = pts[1]
@@ -38,14 +40,15 @@ config = \
 "inputfilepath":"/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/liteUFHZZ4LAnalyzer/Ntuples/",\
 #        "inputfilepath":"/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/outputRoot/DY_2016MC_v3_20170312_afterApproval/",\
         "inputfilename":"ggH125_2016MC_20170223.root",\
+#        "inputfilename":"VBF_HToZZTo4L_M125_13TeV_powheg2_JHUgenV6_pythia8_RunIISummer16MiniAODv2.root",\
 #"inputfilename":"ZZTo4L_13TeV_powheg_pythia8_ext1_RunIISummer16MiniAODv2.root",\
 #        "inputfilename":"DYJetsToLL_M-50_kalman_v4_m2mu.root",\
 "treename":"passedEvents",\
-"cut":"passedFullSelection > 0.5 && mass4l > 105 && mass4l < 140 && finalState == 1 && nFSRPhotons == 0 && \
+"cut":"passedFullSelection > 0.5 && mass4l > 105 && mass4l < 140 && finalState == 1 &&  \
        pTGENL4 > " + str(pt1)  + " && pTGENL4 < " + str(pt2) + " && \
        abs(etaL4) > " + str(eta1) + " && abs(etaL4) < " + str(eta2),\
-"x_low":-0.1,\
-"x_high":0.1,\
+"x_low":-0.2,\
+"x_high":0.2,\
 "x_bins": 100,\
 "pdfname": "doubleCB_1",\
 # for bin fit
@@ -61,7 +64,7 @@ config = \
 "doLogy":False,\
 "xTitle": "(pT_{reco}-pT_{gen})/pT_{gen}",\
 "yTitle": "",\
-"savepath": "/home/mhl/public_html/2017/20170508_checkResiduals_noFSR/H4L/",\
+"savepath": plotpath,\
 "savename": "muPtResidual_pt_" + str(pt1) + "_" + str(pt2) + "_eta_" + str(eta1).replace(".","p") + "_" + str(eta2).replace(".","p")
 }
 config["cut"] += " && " + config["plotVarFormula"] + " > " + str(config["x_low"]) \
@@ -77,7 +80,7 @@ makeplotClass.MakePdfFactory()
 makeplotClass.MakeDataset()
 pdf = makeplotClass.w.pdf(config["pdfname"])
 dataset = makeplotClass.dataset
-print dataset.sumEntries()
+
 #lep3
 config["cut"] = config["cut"].replace("L4","L3")
 config["plotVarFormula"] = config["plotVarFormula"].replace("L4","L3")

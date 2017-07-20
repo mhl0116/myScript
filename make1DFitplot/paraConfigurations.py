@@ -1,6 +1,6 @@
 paraConfigs = { }
 
-savePath = '/home/mhl/public_html/2017/20170503_testUnbinFitCode/'
+savePath = '/home/mhl/public_html/2017/20170718_deltaM/m4lShape/'
 
 saveName = 'GENMZ_2016MC_e_massZ'
 paraConfigs[saveName] = \
@@ -1376,18 +1376,155 @@ paraConfigs[saveName] = \
 }
 
 
-saveName = 'test_pT1_residual'
+saveName = 'GENmassZZ_4mu_bare'
 paraConfigs[saveName] = \
 {\
-'rootPath1': '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/liteUFHZZ4LAnalyzer/Ntuples/',
-'rootfile1': 'ggH125_2016MC_20170223.root',
+'rootPath1': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/inputRoots_2016MC/',
+'rootfile1': 'GluGluHToZZTo4L_M125_13TeV_powheg2_JHUgenV6_pythia8_RunIISummer16MiniAODv2_20170627_v1.root',
+#'rootfile1': 'ggH125_2016MC.root',
+'tree1': 'Ana/passedEvents',
+'binInfo': [100, 124.8, 125.2],
+'vars1': ['GENmassZZ_born'],
+'cuts1': ['Sum$(abs(GENlep_id[])==13)>=4 &&  Sum$(abs(GENlep_id[])==15)==0'],
+'weight1': ['1'],
+'xTitle': 'GENmassZZ_bare',
+'yTitle': '',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': ' ',
+'pdfName': 'doubleCB'
+}
+
+saveName = 'GENmassZZ_4mu_dressed'
+paraConfigs[saveName] = \
+{\
+'rootPath1': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/inputRoots_2016MC/',
+'rootfile1': 'GluGluHToZZTo4L_M125_13TeV_powheg2_JHUgenV6_pythia8_RunIISummer16MiniAODv2_20170627_v1.root',
+#'rootfile1': 'ggH125_2016MC.root',
+'tree1': 'Ana/passedEvents',
+'binInfo': [100, 124.8, 125.2],
+'vars1': ['GENmassZZ'],
+'cuts1': ['Sum$(abs(GENlep_id[])==13)>=4 &&  Sum$(abs(GENlep_id[])==15)==0'],
+'weight1': ['1'],
+'xTitle': 'GENmassZZ_dressed',
+'yTitle': '',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': ' ',
+'pdfName': 'doubleCB'
+}
+
+
+saveName = 'GENMH_4mu'
+paraConfigs[saveName] = \
+{\
+'rootPath1': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/inputRoots_2016MC/',
+'rootfile1': 'GluGluHToZZTo4L_M125_13TeV_powheg2_JHUgenV6_pythia8_RunIISummer16MiniAODv2_20170627_v1.root',
+#'rootfile1': 'ggH125_2016MC.root',
+'tree1': 'Ana/passedEvents',
+'binInfo': [100, 124.8, 125.2],
+'vars1': ['GENMH'],
+'cuts1': ['Sum$(abs(GENlep_id[])==13)>=4 &&  Sum$(abs(GENlep_id[])==15)==0'],
+'weight1': ['1'],
+'xTitle': 'GENMH',
+'yTitle': '',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': ' ',
+'pdfName': 'doubleCB'
+}
+
+
+
+saveName = 'jpsi_2mu'
+paraConfigs[saveName] = \
+{\
+'rootPath1': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/outputRoot/DY_2016MC_v1_20170427/',
+'rootfile1': 'DYJetsToLL_M-50_kalman_v4_m2mu.root',
 #'rootfile1': 'ggH125_2016MC.root',
 'tree1': 'passedEvents',
-'binInfo': [100, -0.15, 0.15],
-'vars1': ['(pTL1-pTGENL1)/pTGENL1'],
-'cuts1': ['passedFullSelection && finalState == 1 && mass4l > 105 && mass4l < 140'],
+'binInfo': [10, 2.5, 3.6],
+'vars1': ['massZ'],
+'cuts1': ['massZ > 2.5 && massZ < 3.6'],
 'weight1': ['1'],
-'xTitle': '(pTL1-pTGENL1)/pTGENL1',
+'xTitle': 'm2mu',
+'yTitle': '',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': ' ',
+'pdfName': 'doubleCB'
+}
+
+
+saveName = 'GENZ4L_4mu_massZZ'
+paraConfigs[saveName] = \
+{\
+'rootPath1': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/inputRoots_2016MC/',
+'rootfile1': 'ZZTo4L_13TeV_powheg_pythia8_ext1_RunIISummer16MiniAODv2_20170627_v1.root',
+'tree1': 'Ana/passedEvents',
+'binInfo': [100, 90.7, 91.7],
+'vars1': ['GENmassZZ'],
+'cuts1': ['Sum$(abs(GENlep_id[])==13)>=4 &&  Sum$(abs(GENlep_id[])==15)==0'],
+'weight1': ['1'],
+'xTitle': 'GENmass4mu',
+'yTitle': '',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': ' ',
+'pdfName': 'gauss'
+}
+
+
+saveName = 'GENZ4L_4mu_massZZ_passedFullSelection'
+paraConfigs[saveName] = \
+{\
+'rootPath1': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/inputRoots_2016MC/',
+'rootfile1': 'ZZTo4L_13TeV_powheg_pythia8_ext1_RunIISummer16MiniAODv2_20170627_v1.root',
+'tree1': 'Ana/passedEvents',
+'binInfo': [100, 90.7, 91.7],
+'vars1': ['GENmassZZ'],
+'cuts1': ['Sum$(abs(GENlep_id[])==13)>=4 &&  Sum$(abs(GENlep_id[])==15)==0 && passedFullSelection'],
+'weight1': ['1'],
+'xTitle': 'GENmass4mu',
+'yTitle': '',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': ' ',
+'pdfName': 'gauss'
+}
+
+
+saveName = 'GENZ4L_4mu_massZZ_passedFullSelection_noGENFsr'
+paraConfigs[saveName] = \
+{\
+'rootPath1': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/inputRoots_2016MC/',
+'rootfile1': 'ZZTo4L_13TeV_powheg_pythia8_ext1_RunIISummer16MiniAODv2_20170627_v1.root',
+'tree1': 'Ana/passedEvents',
+'binInfo': [100, 89.2, 93.2],
+'vars1': ['GENmassZZ'],
+'cuts1': ['passedFullSelection && finalState == 1 && (GENmassZZ == GENmassZZ_born)'],
+'weight1': ['1'],
+'xTitle': 'GENmass4mu',
+'yTitle': '',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': ' ',
+'pdfName': 'doubleCB'
+}
+
+
+
+saveName = 'GENH4L_4mu_massZZ_passedFullSelection_noGENFsr'
+paraConfigs[saveName] = \
+{\
+'rootPath1': '/raid/raid8/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/inputRoots_2016MC/',
+'rootfile1': 'GluGluHToZZTo4L_M125_13TeV_powheg2_JHUgenV6_pythia8_RunIISummer16MiniAODv2_20170627_v1.root',
+'tree1': 'Ana/passedEvents',
+'binInfo': [100, 124, 126],
+'vars1': ['GENmassZZ'],
+'cuts1': ['passedFullSelection && finalState == 1 && (GENmassZZ == GENmassZZ_born)'],
+'weight1': ['1'],
+'xTitle': 'GENmass4mu',
 'yTitle': '',
 'savePath': savePath,
 'saveName': saveName, #

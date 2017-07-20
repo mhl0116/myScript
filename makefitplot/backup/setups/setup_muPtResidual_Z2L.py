@@ -39,8 +39,8 @@ config = \
 "cut":"massZ > 80 && massZ < 100 && \
        genLep_pt1 > " + str(pt1)  + " && genLep_pt1 < " + str(pt2) + " && \
        abs(genLep_eta1) > " + str(eta1) + " && abs(genLep_eta1) < " + str(eta2),\
-"x_low":-0.1,\
-"x_high":0.1,\
+"x_low":-0.2,\
+"x_high":0.2,\
 "x_bins": 100,\
 "pdfname": "doubleCB_1",\
 # for bin fit
@@ -53,7 +53,7 @@ config = \
 "doLogy":False,\
 "xTitle": "(pT_{reco}-pT_{gen})/pT_{gen}",\
 "yTitle": "",\
-"savepath": "/home/mhl/public_html/2017/20170505_checkResiduals/Z2L/",\
+"savepath": "/home/mhl/public_html/2017/20170509_checkResiduals/Z2L/",\
 "savename": "muPtResidual_pt_" + str(pt1) + "_" + str(pt2) + "_eta_" + str(eta1).replace(".","p") + "_" + str(eta2).replace(".","p")
 }
 config["cut"] += " && " + config["plotVarFormula"] + " > " + str(config["x_low"]) \
